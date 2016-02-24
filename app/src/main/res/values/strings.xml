@@ -3,4 +3,26 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="action_help">Help</string>
+
+    <!-- Navigation drawer -->
+    <string name="action_open">Open</string>
+    <string name="action_close">Close</string>
+
+    <!-- splash-screen -->
+    <string name="splash_loading">Loading...</string>
+
+    <!-- splash-screen -->
+    <string name="drawer_item_feeds">Feeds</string>
+
+    <!-- rss feeds categories -->
+    <string name="rss_category_tech">Technology</string>
+    <string name="rss_category_business">Business</string>
+    <string name="rss_category_finance">Finance</string>
+    <string name="rss_category_travel">Travel</string>
+    <string name="rss_category_others">Others</string>
+    
+    <!-- roboto font series -->
+    <string name="font_roboto_light">Roboto-Light.ttf</string>
+    <string name="font_roboto_regular">Roboto-Regular.ttf</string>
 </resources>

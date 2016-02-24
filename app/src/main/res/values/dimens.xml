@@ -2,4 +2,20 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- App text-sizes -->
+    <dimen name="text_size_sp_14">14sp</dimen>
+    <dimen name="text_size_sp_18">18sp</dimen>
+    <dimen name="text_size_sp_22">22sp</dimen>
+
+    <!-- App margins and padding -->
+    <dimen name="margin_size_dp_16">16dp</dimen>
+    <dimen name="margin_size_dp_72">72dp</dimen>
+    <dimen name="margin_size_dp_96">96dp</dimen>
+
+    <!-- Navigation drawer -->
+    <dimen name="drawer_header_height">150dp</dimen>
+
+    <!-- Homepage -->
+    <dimen name="banner_height">220dp</dimen>
 </resources>
