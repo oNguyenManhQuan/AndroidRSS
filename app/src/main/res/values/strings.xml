@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RSS Feeds</string>
+    <string name="app_name">Voice of America</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -25,4 +25,13 @@
     <!-- roboto font series -->
     <string name="font_roboto_light">Roboto-Light.ttf</string>
     <string name="font_roboto_regular">Roboto-Regular.ttf</string>
+
+    <!-- error handling data on fragment -->
+    <string name="text_touch_to_reload">Please touch to reload</string>
+    <string name="text_emoticon_sad">:(</string>
+
+    <!-- feed item -->
+    <string name="text_dummy_title">Title</string>
+    <string name="text_dummy_description">This is a description</string>
+    <string name="text_dummy_published_date">3rd May, 2016</string>
 </resources>

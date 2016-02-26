@@ -13,20 +13,8 @@
         android:layout_marginBottom="@dimen/margin_size_dp_96"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="@string/app_name"
+        android:text="@string/splash_loading"
         android:textColor="@color/color_white"
         android:textSize="@dimen/text_size_sp_22"
         app:font="@string/font_roboto_regular"/>
-
-    <com.licon.rssfeeds.ui.widget.TextViewRoboto
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/margin_size_dp_72"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/splash_loading"
-        android:textColor="@color/color_gray_dark"
-        android:textSize="@dimen/text_size_sp_14"
-        app:font="@string/font_roboto_light"/>
 </RelativeLayout>
