@@ -30,4 +30,9 @@
     <dimen name="feed_thumbnail_height">54dp</dimen>
     <dimen name="feed_thumbnail_width">54dp</dimen>
 
+    <!-- others fragment grid item dimenstion -->
+    <dimen name="grid_padding_top">16dp</dimen>
+    <dimen name="grid_drawable_padding">-4dp</dimen>
+    <dimen name="grid_hw_for_weight">0dp</dimen>
+
 </resources>

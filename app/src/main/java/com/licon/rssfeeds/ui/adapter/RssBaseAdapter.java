@@ -15,11 +15,11 @@ import com.licon.rssfeeds.R;
 import com.licon.rssfeeds.data.model.FeedItem;
 import com.licon.rssfeeds.ui.widget.TextViewRoboto;
 import com.licon.rssfeeds.util.DateFormatUtil;
+import com.licon.rssfeeds.util.UIUtil;
 
 import java.util.List;
 
-public class TechnologyAdapter extends RecyclerView.Adapter<TechnologyAdapter.SimpleViewHolder> {
-    private static final String PUBLISHED_ON = "Published on : ";
+public class RssBaseAdapter extends RecyclerView.Adapter<RssBaseAdapter.SimpleViewHolder> {
 
     private onItemClickListener mItemClickListener;
     private List<FeedItem> mFeeds;
@@ -27,7 +27,7 @@ public class TechnologyAdapter extends RecyclerView.Adapter<TechnologyAdapter.Si
     private int mCount;
     private Context mContext;
 
-    public TechnologyAdapter(Context context, List<FeedItem> feeds) {
+    public RssBaseAdapter(Context context, List<FeedItem> feeds) {
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(context);
         this.mFeeds = feeds;
@@ -45,11 +45,12 @@ public class TechnologyAdapter extends RecyclerView.Adapter<TechnologyAdapter.Si
 
         String title = feed.getTitle();
         String description = feed.getDescription();
-        final String published_date = PUBLISHED_ON + DateFormatUtil.parseDateToString(feed.getPublicationDate());
+        String published_on = String.format(mContext.getResources().getString(R.string.published_on),
+                DateFormatUtil.parseDateToString(feed.getPublicationDate()));
 
-        holder.mTextTitle.setText(TextUtils.isEmpty(title) ? "" : title);
-        holder.mTextDescription.setText(TextUtils.isEmpty(description) ? "" : description);
-        holder.mTextPublishedDate.setText(TextUtils.isEmpty(published_date) ? "" : published_date);
+        UIUtil.addTextToTextView(holder.mTextTitle, title);
+        UIUtil.addTextToTextView(holder.mTextDescription, description);
+        UIUtil.addTextToTextView(holder.mTextPublishedDate, published_on);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

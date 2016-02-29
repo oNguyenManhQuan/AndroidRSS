@@ -1,0 +1,73 @@
+package com.licon.rssfeeds.ui.fragment;
+
+/**
+ * Created by FRAMGIA\khairul.alam.licon on 24/2/16.
+ */
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.NestedScrollView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+
+import com.licon.rssfeeds.R;
+import com.licon.rssfeeds.data.constants.RSSURL;
+
+public class OthersFragment extends Fragment implements View.OnClickListener {
+
+    private Button mButtonAfrica;
+    private Button mButtonAsia;
+    private Button mButtonMiddleEast;
+    private Button mButtonEurope;
+    private NestedScrollView mNestedScrollView;
+    private RssBaseFragment mRssBaseFragment;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_others, null);
+
+        mButtonAfrica = (Button) view.findViewById(R.id.button_africa);
+        mButtonAsia = (Button) view.findViewById(R.id.button_asia);
+        mButtonMiddleEast = (Button) view.findViewById(R.id.button_middle_east);
+        mButtonEurope = (Button) view.findViewById(R.id.button_europe);
+        mNestedScrollView = (NestedScrollView) view.findViewById(R.id.nested_scroll_view);
+
+        mButtonAfrica.setOnClickListener(this);
+        mButtonAsia.setOnClickListener(this);
+        mButtonMiddleEast.setOnClickListener(this);
+        mButtonEurope.setOnClickListener(this);
+
+        return view;
+    }
+
+    private void replaceOldFragmentWithFeed(String rss_url) {
+        RssBaseFragment rssBaseFragment = new RssBaseFragment();
+        rssBaseFragment.setRssFeedUrl(rss_url);
+        FragmentTransaction trans = getFragmentManager().beginTransaction();
+        trans.replace(R.id.layout_root, rssBaseFragment);
+        trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        trans.addToBackStack(null);
+        trans.commit();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.button_africa:
+                replaceOldFragmentWithFeed(RSSURL.XML_URL_AFRICA);
+                break;
+            case R.id.button_asia:
+                replaceOldFragmentWithFeed(RSSURL.XML_URL_ASIA);
+                break;
+            case R.id.button_middle_east:
+                replaceOldFragmentWithFeed(RSSURL.XML_URL_MIDDLE_EAST);
+                break;
+            case R.id.button_europe:
+                replaceOldFragmentWithFeed(RSSURL.XML_URL_EUROPE);
+                break;
+        }
+    }
+}
