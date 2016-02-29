@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_size_dp_8">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/color_white"
+        android:padding="@dimen/margin_size_dp_12">
+
+        <ImageView
+            android:id="@+id/image_thumbnail"
+            android:layout_width="@dimen/feed_thumbnail_width"
+            android:layout_height="@dimen/feed_thumbnail_height"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_launcher"/>
+
+        <com.licon.rssfeeds.ui.widget.TextViewRoboto
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/image_thumbnail"
+            android:layout_marginLeft="@dimen/margin_size_dp_4"
+            android:gravity="left"
+            android:singleLine="true"
+            android:text="@string/text_dummy_title"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/text_size_sp_22"
+            app:font="@string/font_roboto_regular"/>
+
+        <com.licon.rssfeeds.ui.widget.TextViewRoboto
+            android:id="@+id/text_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/text_title"
+            android:layout_alignStart="@+id/text_title"
+            android:layout_below="@+id/text_title"
+            android:gravity="left"
+            android:maxLines="2"
+            android:text="@string/text_dummy_description"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/text_size_sp_12"
+            app:font="@string/font_roboto_light"/>
+
+        <com.licon.rssfeeds.ui.widget.TextViewRoboto
+            android:id="@+id/text_published_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/text_description"
+            android:layout_alignStart="@+id/text_description"
+            android:layout_below="@+id/text_description"
+            android:gravity="left"
+            android:singleLine="true"
+            android:text="@string/text_dummy_published_date"
+            android:textColor="@color/color_gray_dark"
+            android:textSize="@dimen/text_size_sp_10"
+            app:font="@string/font_roboto_light"/>
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,15 +1,16 @@
 package com.licon.rssfeeds.ui.adapter;
 
+/**
+ * Created by FRAMGIA\khairul.alam.licon on 24/2/16.
+ */
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.licon.rssfeeds.data.constants.AppData;
 import com.licon.rssfeeds.ui.fragment.BlankFragment;
+import com.licon.rssfeeds.ui.fragment.TechnologyFragment;
 
-/**
- * Created by FRAMGIA\khairul.alam.licon on 24/2/16.
- */
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
 	private static final int NUMBER_OF_TABS = 5;
@@ -23,7 +24,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 		Fragment fragment = null;
 		switch(position) {
 			case AppData.TAB_TECHNOLOGY:
-				fragment = new BlankFragment();
+				fragment = new TechnologyFragment();
 				break;
 			case AppData.TAB_BUSINESS:
 				fragment = new BlankFragment();

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ProgressBar
+        android:id="@+id/progressbar_loading"
+        style="@style/AppProgressBar"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+    <LinearLayout
+        android:id="@+id/layout_error_load"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <com.licon.rssfeeds.ui.widget.TextViewRoboto
+            android:id="@+id/text_emoticon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/text_emoticon_sad"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/text_size_sp_48"
+            app:font="@string/font_roboto_light"/>
+
+        <com.licon.rssfeeds.ui.widget.TextViewRoboto
+            android:id="@+id/text_error_reload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/text_touch_to_reload"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/text_size_sp_14"
+            app:font="@string/font_roboto_regular"/>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -28,7 +28,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/banner_height"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/bg_banner"
+                    android:src="@drawable/bg_voa"
                     app:layout_collapseMode="parallax"/>
 
                 <include layout="@layout/toolbar"/>
@@ -68,6 +68,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/bg_drawer_header"
+        app:headerLayout="@layout/layout_drawer_header"
         app:menu="@menu/menu_drawer"/>
 </android.support.v4.widget.DrawerLayout>
