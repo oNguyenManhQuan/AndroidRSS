@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,111 +20,146 @@ import com.licon.rssfeeds.R;
 import com.licon.rssfeeds.data.constants.AppData;
 import com.licon.rssfeeds.ui.adapter.ViewPagerAdapter;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+        View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
-	private CollapsingToolbarLayout mCollapsingToolbarLayout;
-	private DrawerLayout mDrawerLayout;
-	private NavigationView mNavigationView;
-	private Toolbar mToolbar;
-	private ViewPager mViewPager;
-	private TabLayout mTablayout;
-	private FloatingActionButton mFabCategory;
+    private CollapsingToolbarLayout mCollapsingToolbarLayout;
+    private DrawerLayout mDrawerLayout;
+    private NavigationView mNavigationView;
+    private Toolbar mToolbar;
+    private ViewPager mViewPager;
+    private TabLayout mTablayout;
+    private FloatingActionButton mFabCategory;
+    private PopupMenu mPopupMenu;
 
-	private ActionBar mActionbar;
-	private ActionBarDrawerToggle mDrawerToggle;
-	private ViewPagerAdapter mViewPagerAdapter;
+    private ActionBar mActionbar;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private ViewPagerAdapter mViewPagerAdapter;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
-		mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
-		mToolbar = (Toolbar) findViewById(R.id.toolbar);
-		mViewPager = (ViewPager) findViewById(R.id.viewpager);
-		mTablayout = (TabLayout) findViewById(R.id.tablayout);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
+        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mTablayout = (TabLayout) findViewById(R.id.tablayout);
+        mFabCategory = (FloatingActionButton) findViewById(R.id.fab_category);
 
-		setupActionBar();
-		setupViewPagerWithTabs();
-		mNavigationView.setNavigationItemSelectedListener(this);
-	}
+        mFabCategory.setOnClickListener(this);
 
-	private void setupActionBar() {
-		setSupportActionBar(mToolbar);
-		mActionbar = getSupportActionBar();
-		mActionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
-		mActionbar.setDisplayHomeAsUpEnabled(true);
+        setupActionBar();
+        setupViewPagerWithTabs();
+        mNavigationView.setNavigationItemSelectedListener(this);
+    }
 
-		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar,
-				R.string.action_open, R.string.action_close) {
+    private void setupActionBar() {
+        setSupportActionBar(mToolbar);
+        mActionbar = getSupportActionBar();
+        mActionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        mActionbar.setDisplayHomeAsUpEnabled(true);
 
-			@Override
-			public void onDrawerOpened(View drawerView) {
-				super.onDrawerOpened(drawerView);
-			}
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar,
+                R.string.action_open, R.string.action_close) {
 
-			@Override
-			public void onDrawerClosed(View drawerView) {
-				super.onDrawerClosed(drawerView);
-			}
-		};
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
 
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
-		mDrawerToggle.syncState();
-	}
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
+        };
 
-	private void setupViewPagerWithTabs() {
-		mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-		mViewPager.setAdapter(mViewPagerAdapter);
-		mTablayout.setupWithViewPager(mViewPager);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
+    }
 
-		//tab-1
-		final TabLayout.Tab tab_tech = mTablayout.newTab();
-		tab_tech.setText(getResources().getString(R.string.rss_category_tech));
-		tab_tech.setIcon(getResources().getDrawable(R.drawable.ic_tab_tech));
-		mTablayout.addTab(tab_tech, AppData.TAB_TECHNOLOGY);
-		//tab-2
-		final TabLayout.Tab tab_business = mTablayout.newTab();
-		tab_business.setText(getResources().getString(R.string.rss_category_business));
-		tab_business.setIcon(getResources().getDrawable(R.drawable.ic_tab_business));
-		mTablayout.addTab(tab_business, AppData.TAB_BUSINESS);
-		//tab-3
-		final TabLayout.Tab tab_finance = mTablayout.newTab();
-		tab_finance.setText(getResources().getString(R.string.rss_category_finance));
-		tab_finance.setIcon(getResources().getDrawable(R.drawable.ic_tab_finance));
-		mTablayout.addTab(tab_finance, AppData.TAB_FINANCE);
-		//tab-4
-		final TabLayout.Tab tab_travel = mTablayout.newTab();
-		tab_travel.setText(getResources().getString(R.string.rss_category_travel));
-		tab_travel.setIcon(getResources().getDrawable(R.drawable.ic_tab_travel));
-		mTablayout.addTab(tab_travel, AppData.TAB_TRAVEL);
-		//tab-5
-		final TabLayout.Tab tab_others = mTablayout.newTab();
-		tab_others.setText(getResources().getString(R.string.rss_category_others));
-		tab_others.setIcon(getResources().getDrawable(R.drawable.ic_tab_others));
-		mTablayout.addTab(tab_others, AppData.TAB_OTHERS);
+    private void setupViewPagerWithTabs() {
+        mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(mViewPagerAdapter);
+        mTablayout.setupWithViewPager(mViewPager);
 
-		mTablayout.setTabTextColors(ContextCompat.getColorStateList(this, R.color.tab_selector));
-		mTablayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.tabIndicator));
+        addTab(R.string.rss_category_usa_home, R.drawable.ic_tab_usa_home, AppData.TAB_USA_HOME);
+        addTab(R.string.rss_category_tech, R.drawable.ic_tab_tech, AppData.TAB_TECHNOLOGY);
+        addTab(R.string.rss_category_business, R.drawable.ic_tab_business, AppData.TAB_BUSINESS);
+        addTab(R.string.rss_category_health, R.drawable.ic_tab_health, AppData.TAB_HEALTH);
+        addTab(R.string.rss_category_entertainment, R.drawable.ic_tab_entertainment, AppData.TAB_ENTERTAINMENT);
+        addTab(R.string.rss_category_others, R.drawable.ic_tab_others, AppData.TAB_OTHERS);
 
-		mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTablayout));
-	}
+        mTablayout.setTabTextColors(ContextCompat.getColorStateList(this, R.color.tab_selector));
+        mTablayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.tabIndicator));
 
-	@Override
-	public boolean onNavigationItemSelected(MenuItem menuItem) {
-		switch (menuItem.getItemId()) {
-			case R.id.nav_item_feedstab:
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTablayout));
+    }
 
-				break;
-			case R.id.nav_item_settings:
+    private void addTab(int textResId, int iconResId, int position) {
+        TabLayout.Tab tabLayout = mTablayout.newTab();
+        tabLayout.setText(getResources().getString(textResId));
+        tabLayout.setIcon(getResources().getDrawable(iconResId));
+        mTablayout.addTab(tabLayout, position);
+    }
 
-				break;
-			case R.id.nav_item_help:
+    @Override
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.nav_item_feedstab:
 
-				break;
-		}
-		mDrawerLayout.closeDrawers();
-		return false;
-	}
+                break;
+            case R.id.nav_item_settings:
+
+                break;
+            case R.id.nav_item_help:
+
+                break;
+        }
+        mDrawerLayout.closeDrawers();
+        return false;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.fab_category:
+                showPopupMenu(view);
+                break;
+        }
+    }
+
+    public void showPopupMenu(View view) {
+        mPopupMenu = new PopupMenu(MainActivity.this, view);
+        mPopupMenu.setOnMenuItemClickListener(this);
+        mPopupMenu.inflate(R.menu.menu_popup);
+        mPopupMenu.show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_open_home:
+                mViewPager.setCurrentItem(AppData.TAB_USA_HOME);
+                return true;
+            case R.id.action_open_technology:
+                mViewPager.setCurrentItem(AppData.TAB_TECHNOLOGY);
+                return true;
+            case R.id.action_open_business:
+                mViewPager.setCurrentItem(AppData.TAB_BUSINESS);
+                return true;
+            case R.id.action_open_health:
+                mViewPager.setCurrentItem(AppData.TAB_HEALTH);
+                return true;
+            case R.id.action_open_entertainment:
+                mViewPager.setCurrentItem(AppData.TAB_ENTERTAINMENT);
+                return true;
+            case R.id.action_open_others:
+                mViewPager.setCurrentItem(AppData.TAB_OTHERS);
+                return true;
+        }
+        mPopupMenu.dismiss();
+        return false;
+    }
 }

@@ -11,4 +11,13 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:indeterminateDrawable">@drawable/bg_progress_spinning_style</item>
     </style>
+    <!-- Button Style For Others Fragment -->
+    <style name="AppGridStyleButton">
+        <item name="android:paddingTop">@dimen/grid_padding_top</item>
+        <item name="android:textColor">@color/color_gray_dark</item>
+        <item name="android:textSize">@dimen/text_size_sp_22</item>
+        <item name="android:layout_margin">@dimen/margin_size_dp_4</item>
+        <item name="android:drawablePadding">@dimen/grid_drawable_padding</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>

@@ -12,15 +12,24 @@
     <!-- splash-screen -->
     <string name="splash_loading">Loading...</string>
 
-    <!-- splash-screen -->
+    <!-- progress bar -->
+    <string name="progress_status">0%</string>
+
+    <!-- feed item -->
     <string name="drawer_item_feeds">Feeds</string>
+    <string name="published_on">Published on : %s</string>
 
     <!-- rss feeds categories -->
+    <string name="rss_category_usa_home">Home</string>
     <string name="rss_category_tech">Technology</string>
     <string name="rss_category_business">Business</string>
-    <string name="rss_category_finance">Finance</string>
-    <string name="rss_category_travel">Travel</string>
+    <string name="rss_category_health">Health</string>
+    <string name="rss_category_entertainment">Entertainment</string>
     <string name="rss_category_others">Others</string>
+    <string name="rss_category_africa">Africa</string>
+    <string name="rss_category_asia">Asia</string>
+    <string name="rss_category_middle_east">Middle East</string>
+    <string name="rss_category_europe">Europe</string>
     
     <!-- roboto font series -->
     <string name="font_roboto_light">Roboto-Light.ttf</string>
@@ -29,6 +38,9 @@
     <!-- error handling data on fragment -->
     <string name="text_touch_to_reload">Please touch to reload</string>
     <string name="text_emoticon_sad">:(</string>
+    <string name="text_dialog_title_error">Error</string>
+    <string name="text_dialog_btn_ok">Okay</string>
+    <string name="text_dialog_msg_no_data">No data found!</string>
 
     <!-- feed item -->
     <string name="text_dummy_title">Title</string>

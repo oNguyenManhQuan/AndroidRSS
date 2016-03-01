@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white">
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nested_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TableLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TableRow
+                    android:id="@+id/tableRowUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/grid_hw_for_weight"
+                    android:layout_weight="1">
+
+                    <Button
+                        android:id="@+id/button_africa"
+                        android:layout_width="@dimen/grid_hw_for_weight"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_ripple_effect_white"
+                        android:drawableTop="@drawable/ic_tab_others_africa"
+                        android:text="@string/rss_category_africa"
+                        style="@style/AppGridStyleButton"/>
+
+                    <Button
+                        android:id="@+id/button_asia"
+                        android:layout_width="@dimen/grid_hw_for_weight"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_ripple_effect_gray"
+                        android:drawableTop="@drawable/ic_tab_others_asia"
+                        android:text="@string/rss_category_asia"
+                        style="@style/AppGridStyleButton"/>
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tableRowDown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/grid_hw_for_weight"
+                    android:layout_weight="1">
+
+                    <Button
+                        android:id="@+id/button_middle_east"
+                        android:layout_width="@dimen/grid_hw_for_weight"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_ripple_effect_gray"
+                        android:drawableTop="@drawable/ic_tab_others_middle_east"
+                        android:text="@string/rss_category_middle_east"
+                        style="@style/AppGridStyleButton"/>
+
+                    <Button
+                        android:id="@+id/button_europe"
+                        android:layout_width="@dimen/grid_hw_for_weight"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_ripple_effect_white"
+                        android:drawableTop="@drawable/ic_tab_others_europe"
+                        android:text="@string/rss_category_europe"
+                        style="@style/AppGridStyleButton"/>
+                </TableRow>
+            </TableLayout>
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>

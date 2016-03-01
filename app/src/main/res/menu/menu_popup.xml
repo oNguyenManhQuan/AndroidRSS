@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_open_home"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/rss_category_usa_home"
+        android:visible="true"/>
+    <item
+        android:id="@+id/action_open_technology"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/rss_category_tech"
+        android:visible="true"/>
+    <item
+        android:id="@+id/action_open_business"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/rss_category_business"
+        android:visible="true"/>
+
+    <item
+        android:id="@+id/action_open_health"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/rss_category_health"
+        android:visible="true"/>
+
+    <item
+        android:id="@+id/action_open_entertainment"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/rss_category_entertainment"
+        android:visible="true"/>
+
+    <item
+        android:id="@+id/action_open_others"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/rss_category_others"
+        android:visible="true"/>
+
+</menu>
