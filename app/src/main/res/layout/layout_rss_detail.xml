@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardViewHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_size_dp_12">
+
+            <com.licon.rssfeeds.ui.widget.TextViewRoboto
+                android:id="@+id/text_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="@dimen/margin_size_dp_8"
+                android:gravity="left"
+                android:text="@string/text_dummy_title"
+                android:textColor="@color/color_black"
+                android:textSize="@dimen/text_size_sp_22"
+                app:font="@string/font_roboto_regular" />
+
+            <com.licon.rssfeeds.ui.widget.TextViewRoboto
+                android:id="@+id/text_published_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/text_title"
+                android:layout_marginTop="@dimen/margin_size_dp_8"
+                android:gravity="left"
+                android:text="@string/text_dummy_published_date"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_size_sp_12"
+                app:font="@string/font_roboto_regular" />
+
+            <com.licon.rssfeeds.ui.widget.TextViewRoboto
+                android:id="@+id/text_view_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/text_title"
+                android:layout_marginTop="@dimen/margin_size_dp_8"
+                android:gravity="center"
+                android:text="@string/text_viewed_status_new"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_sp_12"
+                app:font="@string/font_roboto_light" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <com.licon.rssfeeds.ui.widget.TextViewRoboto
+        android:id="@+id/text_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cardViewHeader"
+        android:layout_marginTop="@dimen/margin_size_dp_8"
+        android:gravity="left"
+        android:paddingLeft="@dimen/margin_size_dp_12"
+        android:paddingRight="@dimen/margin_size_dp_12"
+        android:text="@string/text_dummy_author"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_sp_12"
+        app:font="@string/font_roboto_regular" />
+
+    <com.licon.rssfeeds.ui.widget.TextViewRoboto
+        android:id="@+id/text_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_author"
+        android:layout_marginTop="@dimen/margin_size_dp_4"
+        android:gravity="left"
+        android:paddingLeft="@dimen/margin_size_dp_12"
+        android:paddingRight="@dimen/margin_size_dp_12"
+        android:text="@string/text_dummy_description"
+        android:textColor="@color/color_gray_rgb_45"
+        android:textSize="@dimen/text_size_sp_14"
+        app:font="@string/font_roboto_regular" />
+
+    <RelativeLayout
+        android:id="@+id/layout_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_description"
+        android:layout_marginTop="@dimen/margin_size_dp_8"
+        android:padding="@dimen/margin_size_dp_8">
+
+        <Button
+            android:id="@+id/button_link"
+            style="@style/AppRegularButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="@string/button_link" />
+
+        <Button
+            android:id="@+id/button_share"
+            style="@style/AppRegularButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="@string/button_share" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

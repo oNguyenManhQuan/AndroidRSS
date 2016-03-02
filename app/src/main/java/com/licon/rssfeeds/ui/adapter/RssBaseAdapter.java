@@ -5,7 +5,6 @@ package com.licon.rssfeeds.ui.adapter;
  */
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +55,7 @@ public class RssBaseAdapter extends RecyclerView.Adapter<RssBaseAdapter.SimpleVi
             @Override
             public void onClick(View view) {
                 if (mItemClickListener != null) {
-                    mItemClickListener.onItemClick(view);
+                    mItemClickListener.onItemClick(view, feed);
                 }
             }
         });
@@ -87,6 +86,6 @@ public class RssBaseAdapter extends RecyclerView.Adapter<RssBaseAdapter.SimpleVi
     }
 
     public interface onItemClickListener {
-        void onItemClick(View view);
+        void onItemClick(View view, FeedItem item);
     }
 }

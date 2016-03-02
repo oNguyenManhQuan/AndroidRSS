@@ -14,10 +14,19 @@
     <!-- Button Style For Others Fragment -->
     <style name="AppGridStyleButton">
         <item name="android:paddingTop">@dimen/grid_padding_top</item>
-        <item name="android:textColor">@color/color_gray_dark</item>
+        <item name="android:textColor">@color/color_gray_rgb_95</item>
         <item name="android:textSize">@dimen/text_size_sp_22</item>
         <item name="android:layout_margin">@dimen/margin_size_dp_4</item>
         <item name="android:drawablePadding">@dimen/grid_drawable_padding</item>
         <item name="android:gravity">center</item>
+    </style>
+    <!-- Material Button Style For Details Page -->
+    <style name="AppRegularButton">
+        <item name="android:textColor">@color/color_white</item>
+        <item name="android:padding">@dimen/margin_size_dp_4</item>
+        <item name="android:minWidth">@dimen/ripple_button_min_width</item>
+        <item name="android:minHeight">@dimen/ripple_button_min_height</item>
+        <item name="android:layout_margin">@dimen/margin_size_dp_4</item>
+        <item name="android:background">@drawable/bg_ripple_effect</item>
     </style>
 </resources>

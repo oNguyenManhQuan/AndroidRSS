@@ -1,10 +1,9 @@
 package com.licon.rssfeeds.data.model;
 
-import android.content.ContentValues;
-
+import java.io.Serializable;
 import java.util.Date;
 
-public class FeedItem {
+public class FeedItem implements Serializable {
 
     private String uniqueId;
     private String title;

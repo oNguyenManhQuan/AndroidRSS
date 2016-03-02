@@ -4,7 +4,7 @@
     android:id="@+id/layout_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_gray_light">
+    android:background="@color/color_gray_rgb_184">
 
     <include layout="@layout/layout_loading_error"/>
 

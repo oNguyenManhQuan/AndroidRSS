@@ -4,6 +4,7 @@ package com.licon.rssfeeds.ui.fragment;
  * Created by FRAMGIA\khairul.alam.licon on 26/2/16.
  */
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,7 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.licon.rssfeeds.R;
+import com.licon.rssfeeds.data.constants.IntentData;
 import com.licon.rssfeeds.data.model.FeedItem;
+import com.licon.rssfeeds.ui.activity.RssBaseDetailsActivity;
 import com.licon.rssfeeds.ui.adapter.RssBaseAdapter;
 import com.licon.rssfeeds.ui.widget.TextViewRoboto;
 import com.licon.rssfeeds.util.UIUtil;
@@ -65,8 +68,10 @@ public class RssBaseFragment extends Fragment implements RssBaseAdapter.onItemCl
     }
 
     @Override
-    public void onItemClick(View view) {
-
+    public void onItemClick(View view, FeedItem feedItem) {
+        Intent intent = new Intent(getActivity(), RssBaseDetailsActivity.class);
+        intent.putExtra(IntentData.DetailsData, feedItem);
+        startActivity(intent);
     }
 
     @Override
@@ -138,6 +143,7 @@ public class RssBaseFragment extends Fragment implements RssBaseAdapter.onItemCl
             if(!items.isEmpty()) {
                 mRssBaseAdapter = new RssBaseAdapter(getContext(), items);
                 mRecyclerView.setAdapter(mRssBaseAdapter);
+                mRssBaseAdapter.setOnItemClickListener(RssBaseFragment.this);
                 mRssBaseAdapter.notifyDataSetChanged();
                 showContent();
             } else {
