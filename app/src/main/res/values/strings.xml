@@ -46,4 +46,12 @@
     <string name="text_dummy_title">Title</string>
     <string name="text_dummy_description">This is a description</string>
     <string name="text_dummy_published_date">3rd May, 2016</string>
+
+    <!-- feed item details -->
+    <string name="button_link">Link</string>
+    <string name="button_share">Share</string>
+    <string name="text_viewed_status_new">New</string>
+    <string name="text_viewed_status_seen">Seen</string>
+    <string name="text_dummy_author">Author Name</string>
+    <string name="text_error_image_load">Image not found!</string>
 </resources>

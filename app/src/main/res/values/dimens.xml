@@ -35,4 +35,8 @@
     <dimen name="grid_drawable_padding">-4dp</dimen>
     <dimen name="grid_hw_for_weight">0dp</dimen>
 
+    <!-- rss detail page -->
+    <dimen name="ripple_button_min_height">36dp</dimen>
+    <dimen name="ripple_button_min_width">80dp</dimen>
+
 </resources>

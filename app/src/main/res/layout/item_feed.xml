@@ -57,7 +57,7 @@
             android:gravity="left"
             android:singleLine="true"
             android:text="@string/text_dummy_published_date"
-            android:textColor="@color/color_gray_dark"
+            android:textColor="@color/color_gray_rgb_95"
             android:textSize="@dimen/text_size_sp_10"
             app:font="@string/font_roboto_light"/>
     </RelativeLayout>
