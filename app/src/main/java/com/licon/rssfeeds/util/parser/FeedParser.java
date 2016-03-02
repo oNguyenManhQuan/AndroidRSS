@@ -3,6 +3,7 @@ package com.licon.rssfeeds.util.parser;
 /**
  * Created by FRAMGIA\khairul.alam.licon on 26/2/16.
  */
+import com.licon.rssfeeds.data.constants.RSSData;
 import com.licon.rssfeeds.data.model.Feed;
 import com.licon.rssfeeds.data.model.FeedItem;
 
@@ -68,7 +69,7 @@ public class FeedParser {
         int eventType = parser.getEventType();
         while (eventType != XmlPullParser.START_TAG)
             eventType = parser.next();
-        if (parser.getName().equals("rss")) {
+        if (parser.getName().equals(RSSData.ATTRIBUTE_PARSER_NAME_RSS)) {
             RSSParser.process(parser, this);
         } else {
             throw new UnknownFeedException();

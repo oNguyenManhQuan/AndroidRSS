@@ -4,6 +4,7 @@ package com.licon.rssfeeds.util.parser;
  * Created by FRAMGIA\khairul.alam.licon on 26/2/16.
  */
 
+import com.licon.rssfeeds.data.constants.RSSData;
 import com.licon.rssfeeds.data.model.Feed;
 import com.licon.rssfeeds.data.model.FeedItem;
 import com.licon.rssfeeds.util.DateFormatUtil;
@@ -29,7 +30,7 @@ public class RSSParser {
         for (int eventType = parser.getEventType(); eventType !=
                 XmlPullParser.END_DOCUMENT; eventType = parser.next()) {
             // check for an ending image tag
-            if (in_image && eventType == XmlPullParser.END_TAG && parser.getName().equals("image")) {
+            if (in_image && eventType == XmlPullParser.END_TAG && parser.getName().equals(RSSData.ATTRIBUTE_FEEDITEM_IMAGE)) {
                 in_image = false;
                 continue;
             }
@@ -39,30 +40,30 @@ public class RSSParser {
             String name = parser.getName();
             // these are elements about the thumbnail
             if (in_image) {
-                if (name.equals("url"))
+                if (name.equals(RSSData.ATTRIBUTE_FEEDITEM_MEDIA_URL))
                     feed.setThumbnail(parser.nextText());
                 continue;
             }
 
-            if (name.equals("item")) {
+            if (name.equals(RSSData.ATTRIBUTE_FEEDITEM_ITEM)) {
                 break;
-            } else if (name.equals("image")) {
+            } else if (name.equals(RSSData.ATTRIBUTE_FEEDITEM_IMAGE)) {
                 in_image = true;
                 continue;
             } else if (parser.getDepth() != 3) {
                 continue;
-            } else if (name.equalsIgnoreCase("pubDate")) {
+            } else if (name.equalsIgnoreCase(RSSData.ATTRIBUTE_FEEDITEM_PUBLISHED_DATE)) {
                 Date date = DateFormatUtil.parseDate(parser.nextText());
                 if (date != null)
                     feed.setPubDate(date);
-            } else if (name.equalsIgnoreCase("lastBuildDate")) {
+            } else if (name.equalsIgnoreCase(RSSData.ATTRIBUTE_FEEDITEM_LASTBUILT_DATE)) {
                 Date date = DateFormatUtil.parseDate(parser.nextText());
                 if (date != null)
                     feed.setLastBuildDate(date);
-            } else if (name.equalsIgnoreCase("title") && parser.getNamespace().equals("")) {
+            } else if (name.equalsIgnoreCase(RSSData.ATTRIBUTE_FEEDITEM_TITLE) && parser.getNamespace().equals("")) {
                 feed.setTitle(parser.nextText());
-            } else if (name.equalsIgnoreCase("thumbnail") && parser.getNamespace().equals(NAMESPACE_MEDIA)) {
-                feed.setThumbnail(parser.getAttributeValue("", "url"));
+            } else if (name.equalsIgnoreCase(RSSData.ATTRIBUTE_FEEDITEM_THUMBNAIL) && parser.getNamespace().equals(NAMESPACE_MEDIA)) {
+                feed.setThumbnail(parser.getAttributeValue("", RSSData.ATTRIBUTE_FEEDITEM_MEDIA_URL));
             }
         }
 
@@ -82,34 +83,38 @@ public class RSSParser {
             if (eventType == XmlPullParser.START_TAG) {
                 String name = parser.getName();
                 String namespace = parser.getNamespace();
-                if (name.equalsIgnoreCase("item")) {
+                if (name.equalsIgnoreCase(RSSData.ATTRIBUTE_FEEDITEM_ITEM)) {
                     item = new FeedItem();
-                } else if (name.equalsIgnoreCase("guid")) {
-                    item.setUniqueId(parser.nextText());
-                } else if (name.equalsIgnoreCase("title") && parser.getNamespace().equals("")) {
+                } else if (name.equalsIgnoreCase(RSSData.ATTRIBUTE_FEEDITEM_GUID)) {
+                    item.setGuid(parser.nextText());
+                } else if (name.equalsIgnoreCase(RSSData.ATTRIBUTE_FEEDITEM_TITLE) && parser.getNamespace().equals("")) {
                     item.setTitle(parser.nextText());
-                } else if (name.equalsIgnoreCase("link")) {
-                    String rel = parser.getAttributeValue(null, "rel");
-                    if (rel != null && rel.equalsIgnoreCase("payment")) {
-                        item.setPaymentURL(parser.getAttributeValue(null, "href"));
+                } else if (name.equalsIgnoreCase(RSSData.ATTRIBUTE_FEEDITEM_LINK)) {
+                    String rel = parser.getAttributeValue(null, RSSData.ATTRIBUTE_FEEDITEM_REL);
+                    if (rel != null && rel.equalsIgnoreCase(RSSData.ATTRIBUTE_FEEDITEM_PAYMENT)) {
+                        item.setPaymentURL(parser.getAttributeValue(null, RSSData.ATTRIBUTE_FEEDITEM_HREF));
                     } else {
                         item.setLink(parser.nextText());
                     }
-                } else if (namespace.equals("") && name.equalsIgnoreCase("description")) {
+                } else if (namespace.equals("") && name.equalsIgnoreCase(RSSData.ATTRIBUTE_FEEDITEM_DESCRIPTION)) {
                     item.setDescription(parser.nextText());
-                } else if (name.equalsIgnoreCase("pubDate")) {
+                } else if (name.equalsIgnoreCase(RSSData.ATTRIBUTE_FEEDITEM_CATEGORY)) {
+                    item.setCategory(parser.nextText());
+                } else if (name.equalsIgnoreCase(RSSData.ATTRIBUTE_FEEDITEM_AUTHOR)) {
+                    item.setAuthor(parser.nextText());
+                } else if (name.equalsIgnoreCase(RSSData.ATTRIBUTE_FEEDITEM_PUBLISHED_DATE)) {
                     item.setPublicationDate(DateFormatUtil.parseDate(parser.nextText()));
-                } else if (name.equalsIgnoreCase("enclosure")) {
-                    item.setMediaURL(parser.getAttributeValue(null, "url"));
+                } else if (name.equalsIgnoreCase(RSSData.ATTRIBUTE_FEEDITEM_ENCLOSURE)) {
+                    item.setMediaURL(parser.getAttributeValue(null, RSSData.ATTRIBUTE_FEEDITEM_MEDIA_URL));
                     try {
-                        item.setMediaSize(Long.valueOf(parser.getAttributeValue(null, "length")));
+                        item.setMediaSize(Long.valueOf(parser.getAttributeValue(null, RSSData.ATTRIBUTE_FEEDITEM_MEDIA_SIZE)));
                     } catch (Exception e) {
                         item.setMediaSize(0L);
                     }
                 }
             } else if (eventType == XmlPullParser.END_TAG) {
                 String name = parser.getName();
-                if (name.equalsIgnoreCase("item")) {
+                if (name.equalsIgnoreCase(RSSData.ATTRIBUTE_FEEDITEM_ITEM)) {
                     if (feedParser.getOnFeedItemHandler() != null)
                         feedParser.getOnFeedItemHandler().OnFeedItem(feedParser, item);
                     if (feedParser.shouldStopProcessing())
