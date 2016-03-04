@@ -135,10 +135,12 @@ public class RssBaseFragment extends Fragment implements RssBaseAdapter.onItemCl
 
                         //adding old data to view from db history
                         if(historyItem != null) {
+                            historyItem.setHistory(true);
                             feedItems.add(historyItem);
                         //adding new data to view from web
                         } else {
                             DBConfig.getConfig().feedItemSQLiteHelper.addRssFeed(item);
+                            item.setHistory(false);
                             feedItems.add(item);
                         }
                     }

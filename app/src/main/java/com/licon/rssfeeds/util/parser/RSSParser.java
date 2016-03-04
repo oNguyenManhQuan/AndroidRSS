@@ -53,11 +53,11 @@ public class RSSParser {
             } else if (parser.getDepth() != 3) {
                 continue;
             } else if (name.equalsIgnoreCase(RSSData.ATTRIBUTE_FEEDITEM_PUBLISHED_DATE)) {
-                Date date = DateFormatUtil.parseDate(parser.nextText());
+                Date date = DateFormatUtil.parseDateFromString(parser.nextText());
                 if (date != null)
                     feed.setPubDate(date);
             } else if (name.equalsIgnoreCase(RSSData.ATTRIBUTE_FEEDITEM_LASTBUILT_DATE)) {
-                Date date = DateFormatUtil.parseDate(parser.nextText());
+                Date date = DateFormatUtil.parseDateFromString(parser.nextText());
                 if (date != null)
                     feed.setLastBuildDate(date);
             } else if (name.equalsIgnoreCase(RSSData.ATTRIBUTE_FEEDITEM_TITLE) && parser.getNamespace().equals("")) {
@@ -103,7 +103,7 @@ public class RSSParser {
                 } else if (name.equalsIgnoreCase(RSSData.ATTRIBUTE_FEEDITEM_AUTHOR)) {
                     item.setAuthor(parser.nextText());
                 } else if (name.equalsIgnoreCase(RSSData.ATTRIBUTE_FEEDITEM_PUBLISHED_DATE)) {
-                    item.setPublicationDate(DateFormatUtil.parseDate(parser.nextText()));
+                    item.setPublicationDate(DateFormatUtil.parseDateFromString(parser.nextText()));
                 } else if (name.equalsIgnoreCase(RSSData.ATTRIBUTE_FEEDITEM_ENCLOSURE)) {
                     item.setMediaURL(parser.getAttributeValue(null, RSSData.ATTRIBUTE_FEEDITEM_MEDIA_URL));
                     try {

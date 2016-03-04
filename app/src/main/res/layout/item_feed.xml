@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:id="@+id/cardItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/margin_size_dp_8">
+    android:layout_margin="@dimen/margin_size_dp_4"
+    card_view:cardCornerRadius="@dimen/margin_size_dp_12">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/color_white"
-        android:padding="@dimen/margin_size_dp_12">
+        android:padding="@dimen/margin_size_dp_4">
 
         <ImageView
             android:id="@+id/image_thumbnail"
             android:layout_width="@dimen/feed_thumbnail_width"
             android:layout_height="@dimen/feed_thumbnail_height"
             android:layout_centerVertical="true"
-            android:src="@mipmap/ic_launcher"/>
+            android:layout_margin="@dimen/margin_size_dp_4"/>
 
         <com.licon.rssfeeds.ui.widget.TextViewRoboto
             android:id="@+id/text_title"
@@ -62,4 +63,4 @@
             app:font="@string/font_roboto_light"/>
     </RelativeLayout>
 
-</RelativeLayout>
+</android.support.v7.widget.CardView>

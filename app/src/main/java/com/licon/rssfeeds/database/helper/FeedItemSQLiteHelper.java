@@ -9,14 +9,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.licon.rssfeeds.R;
 import com.licon.rssfeeds.database.constants.DBConfig;
 import com.licon.rssfeeds.database.constants.FeedItemSQLiteData;
 import com.licon.rssfeeds.data.model.FeedItem;
 import com.licon.rssfeeds.util.DateFormatUtil;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,9 +66,8 @@ public class FeedItemSQLiteHelper extends SQLiteOpenHelper {
         values.put(FeedItemSQLiteData.DATABASE_TABLE_COLUMN_CATEGORY, getStringToStore(feedItem.getCategory()));
         values.put(FeedItemSQLiteData.DATABASE_TABLE_COLUMN_AUTHOR, getStringToStore(feedItem.getAuthor()));
         values.put(FeedItemSQLiteData.DATABASE_TABLE_COLUMN_PUBLISHED_DATE,
-                getStringToStore(DateFormatUtil.parseDateToString(feedItem.getPublicationDate())));
+                DateFormatUtil.parseDateToLong(feedItem.getPublicationDate()));
         values.put(FeedItemSQLiteData.DATABASE_TABLE_COLUMN_MEDIA_SIZE, feedItem.getMediaSize());
-        values.put(FeedItemSQLiteData.DATABASE_TABLE_COLUMN_VIEW_STATUS, mContext.getString(R.string.text_viewed_status_new));
 
         db.insertWithOnConflict(FeedItemSQLiteData.DATABASE_TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
         db.close();
@@ -127,9 +125,8 @@ public class FeedItemSQLiteHelper extends SQLiteOpenHelper {
             feedItem.setMediaURL(cursor.getString(FeedItemSQLiteData.POS_COLUMN_MEDIA_URL_5));
             feedItem.setCategory(cursor.getString(FeedItemSQLiteData.POS_COLUMN_CATEGORY_6));
             feedItem.setAuthor(cursor.getString(FeedItemSQLiteData.POS_COLUMN_AUTHOR_7));
-            feedItem.setPublicationDate(DateFormatUtil.parseDate(cursor.getString(FeedItemSQLiteData.POS_COLUMN_PUBLISHED_DATE_8)));
+            feedItem.setPublicationDate(new Date(cursor.getLong(FeedItemSQLiteData.POS_COLUMN_PUBLISHED_DATE_8)));
             feedItem.setMediaSize(cursor.getLong(FeedItemSQLiteData.POS_COLUMN_MEDIA_SIZE_9));
-            feedItem.setViewStatus(cursor.getString(FeedItemSQLiteData.POS_COLUMN_VIEW_STATUS_10));
         }
         return feedItem;
     }

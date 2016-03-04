@@ -19,7 +19,6 @@ public class FeedItemSQLiteData {
     public static final String DATABASE_TABLE_COLUMN_AUTHOR = RSSData.ATTRIBUTE_FEEDITEM_AUTHOR;
     public static final String DATABASE_TABLE_COLUMN_PUBLISHED_DATE = RSSData.ATTRIBUTE_FEEDITEM_PUBLISHED_DATE;
     public static final String DATABASE_TABLE_COLUMN_MEDIA_SIZE = RSSData.ATTRIBUTE_FEEDITEM_MEDIA_SIZE;
-    public static final String DATABASE_TABLE_COLUMN_VIEW_STATUS = "user_view";
     /** column positions */
     public static final int POS_COLUMN_ID_0 = 0;
     public static final int POS_COLUMN_GUID_1 = 1;
@@ -31,7 +30,6 @@ public class FeedItemSQLiteData {
     public static final int POS_COLUMN_AUTHOR_7 = 7;
     public static final int POS_COLUMN_PUBLISHED_DATE_8 = 8;
     public static final int POS_COLUMN_MEDIA_SIZE_9 = 9;
-    public static final int POS_COLUMN_VIEW_STATUS_10 = 10;
     /** sqlite commands */
     public static final String COMMAND_CREATE_RSSFEED_TABLE = "CREATE TABLE IF NOT EXISTS "
             + DATABASE_TABLE_NAME
@@ -44,9 +42,8 @@ public class FeedItemSQLiteData {
             + DATABASE_TABLE_COLUMN_MEDIA_URL + " TEXT, "
             + DATABASE_TABLE_COLUMN_CATEGORY + " TEXT, "
             + DATABASE_TABLE_COLUMN_AUTHOR + " TEXT, "
-            + DATABASE_TABLE_COLUMN_PUBLISHED_DATE + " TEXT, "
-            + DATABASE_TABLE_COLUMN_MEDIA_SIZE + " LONG, "
-            + DATABASE_TABLE_COLUMN_VIEW_STATUS + " TEXT "
+            + DATABASE_TABLE_COLUMN_PUBLISHED_DATE + " LONG, "
+            + DATABASE_TABLE_COLUMN_MEDIA_SIZE + " LONG "
             + " )";
     public static final String COMMAND_DROP_RSSFEED_TABLE = "DROP TABLE IF EXISTS" + DATABASE_TABLE_NAME;
     public static final String COMMAND_SELECTALL_RSSFEED_TABLE = "SELECT * FROM " + DATABASE_TABLE_NAME;

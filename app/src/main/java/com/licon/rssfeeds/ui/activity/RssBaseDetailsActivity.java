@@ -32,7 +32,6 @@ public class RssBaseDetailsActivity extends AppCompatActivity {
     private TextViewRoboto mTextDescription;
     private TextViewRoboto mTextAuthor;
     private TextViewRoboto mTextPublishedDate;
-    private TextViewRoboto mTextViewStatus;
     private Button mButtonLink;
     private Button mButtonShare;
 
@@ -49,7 +48,6 @@ public class RssBaseDetailsActivity extends AppCompatActivity {
         mTextDescription = (TextViewRoboto) findViewById(R.id.text_description);
         mTextAuthor = (TextViewRoboto) findViewById(R.id.text_author);
         mTextPublishedDate = (TextViewRoboto) findViewById(R.id.text_published_date);
-        mTextViewStatus = (TextViewRoboto) findViewById(R.id.text_view_status);
         mButtonLink = (Button) findViewById(R.id.button_link);
         mButtonShare = (Button) findViewById(R.id.button_share);
 

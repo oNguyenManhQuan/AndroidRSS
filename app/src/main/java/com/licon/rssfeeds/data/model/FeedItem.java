@@ -16,7 +16,7 @@ public class FeedItem implements Serializable {
     private String author;
     private Date publicationDate;
     private Long mediaSize;
-    private String viewStatus;
+    private boolean history;
 
     public int getId() {
         return id;
@@ -106,11 +106,11 @@ public class FeedItem implements Serializable {
         this.mediaSize = mediaSize;
     }
 
-    public String getViewStatus() {
-        return viewStatus;
+    public boolean isHistory() {
+        return history;
     }
 
-    public void setViewStatus(String viewStatus) {
-        this.viewStatus = viewStatus;
+    public void setHistory(boolean history) {
+        this.history = history;
     }
 }
