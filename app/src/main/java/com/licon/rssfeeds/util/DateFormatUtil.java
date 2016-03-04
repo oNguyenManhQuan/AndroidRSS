@@ -67,6 +67,9 @@ public class DateFormatUtil {
 
     public static String parseDateToString(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(); //called without pattern
+        if(date == null) {
+            return null;
+        }
         return dateFormat.format(date);
     }
 }

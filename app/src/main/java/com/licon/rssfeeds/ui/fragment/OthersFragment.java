@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.licon.rssfeeds.R;
-import com.licon.rssfeeds.data.constants.RSSURL;
+import com.licon.rssfeeds.data.constants.RSSData;
 
 public class OthersFragment extends Fragment implements View.OnClickListener {
 
@@ -57,16 +57,16 @@ public class OthersFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_africa:
-                replaceOldFragmentWithFeed(RSSURL.XML_URL_AFRICA);
+                replaceOldFragmentWithFeed(RSSData.XML_URL_AFRICA);
                 break;
             case R.id.button_asia:
-                replaceOldFragmentWithFeed(RSSURL.XML_URL_ASIA);
+                replaceOldFragmentWithFeed(RSSData.XML_URL_ASIA);
                 break;
             case R.id.button_middle_east:
-                replaceOldFragmentWithFeed(RSSURL.XML_URL_MIDDLE_EAST);
+                replaceOldFragmentWithFeed(RSSData.XML_URL_MIDDLE_EAST);
                 break;
             case R.id.button_europe:
-                replaceOldFragmentWithFeed(RSSURL.XML_URL_EUROPE);
+                replaceOldFragmentWithFeed(RSSData.XML_URL_EUROPE);
                 break;
         }
     }

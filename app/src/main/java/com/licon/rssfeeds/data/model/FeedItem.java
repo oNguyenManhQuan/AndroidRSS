@@ -5,21 +5,33 @@ import java.util.Date;
 
 public class FeedItem implements Serializable {
 
-    private String uniqueId;
+    private int id;
+    private String guid;
     private String title;
     private String paymentURL;
     private String link;
     private String description;
-    private Date publicationDate;
     private String mediaURL;
+    private String category;
+    private String author;
+    private Date publicationDate;
     private Long mediaSize;
+    private String viewStatus;
 
-    public String getUniqueId() {
-        return uniqueId;
+    public int getId() {
+        return id;
     }
 
-    public void setUniqueId(String uniqueId) {
-        uniqueId = uniqueId;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getGuid() {
+        return guid;
+    }
+
+    public void setGuid(String guid) {
+        this.guid = guid;
     }
 
     public String getTitle() {
@@ -54,6 +66,22 @@ public class FeedItem implements Serializable {
         this.description = description;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     public Date getPublicationDate() {
         return publicationDate;
     }
@@ -76,5 +104,13 @@ public class FeedItem implements Serializable {
 
     public void setMediaSize(Long mediaSize) {
         this.mediaSize = mediaSize;
+    }
+
+    public String getViewStatus() {
+        return viewStatus;
+    }
+
+    public void setViewStatus(String viewStatus) {
+        this.viewStatus = viewStatus;
     }
 }

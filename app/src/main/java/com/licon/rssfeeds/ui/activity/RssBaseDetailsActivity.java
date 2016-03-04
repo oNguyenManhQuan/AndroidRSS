@@ -6,6 +6,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -72,7 +73,8 @@ public class RssBaseDetailsActivity extends AppCompatActivity {
     private void setFeedDataOnUI(FeedItem feedItem) {
         String title = feedItem.getTitle();
         String description = feedItem.getDescription();
-        String author = feedItem.getUniqueId();
+        String author = feedItem.getAuthor();
+        String category = feedItem.getCategory();
         String published_on = String.format(getResources().getString(R.string.published_on),
                 DateFormatUtil.parseDateToString(feedItem.getPublicationDate()));
         String media_url = feedItem.getMediaURL();
@@ -82,6 +84,8 @@ public class RssBaseDetailsActivity extends AppCompatActivity {
         UIUtil.addTextToTextView(mTextPublishedDate, published_on);
         UIUtil.addTextToTextView(mTextAuthor, author);
         UIUtil.loadImageViewFromUrl(mImageThumbnail, media_url, this);
+
+        mCollapsingToolbarLayout.setTitle(!TextUtils.isEmpty(category) ? category : "");
     }
 
     @Override

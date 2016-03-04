@@ -4,6 +4,7 @@ package com.licon.rssfeeds.ui.fragment;
  * Created by FRAMGIA\khairul.alam.licon on 26/2/16.
  */
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,9 +21,11 @@ import android.widget.ProgressBar;
 import com.licon.rssfeeds.R;
 import com.licon.rssfeeds.data.constants.IntentData;
 import com.licon.rssfeeds.data.model.FeedItem;
+import com.licon.rssfeeds.database.constants.DBConfig;
 import com.licon.rssfeeds.ui.activity.RssBaseDetailsActivity;
 import com.licon.rssfeeds.ui.adapter.RssBaseAdapter;
 import com.licon.rssfeeds.ui.widget.TextViewRoboto;
+import com.licon.rssfeeds.util.DateFormatUtil;
 import com.licon.rssfeeds.util.UIUtil;
 import com.licon.rssfeeds.util.parser.FeedParser;
 
@@ -48,6 +51,7 @@ public class RssBaseFragment extends Fragment implements RssBaseAdapter.onItemCl
     private LinearLayout mLayoutErrorLoad;
     private TextViewRoboto mTextErrorLoad;
     private ProgressBar mProgressBar;
+    private Context mContext;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,6 +67,7 @@ public class RssBaseFragment extends Fragment implements RssBaseAdapter.onItemCl
         mRecyclerView.setLayoutManager(linearLayoutManager);
         new LoadData().execute();
         mTextErrorLoad.setOnClickListener(this);
+        mContext = getActivity().getApplicationContext();
 
         return view;
     }
@@ -118,12 +123,27 @@ public class RssBaseFragment extends Fragment implements RssBaseAdapter.onItemCl
                 Response response = client.newCall(request).execute();
                 Reader result = response.body().charStream();
                 FeedParser feedParser = new FeedParser();
+
                 feedParser.setOnFeedItemHandler(new FeedParser.FeedItemHandler() {
                     @Override
                     public void OnFeedItem(FeedParser feedParser, FeedItem item) {
-                        feedItems.add(item);
+
+                        FeedItem historyItem = DBConfig.getConfig().feedItemSQLiteHelper.getSingleFeedItem(
+                                item.getTitle(),
+                                item.getCategory(),
+                                DateFormatUtil.parseDateToString(item.getPublicationDate()));
+
+                        //adding old data to view from db history
+                        if(historyItem != null) {
+                            feedItems.add(historyItem);
+                        //adding new data to view from web
+                        } else {
+                            DBConfig.getConfig().feedItemSQLiteHelper.addRssFeed(item);
+                            feedItems.add(item);
+                        }
                     }
                 });
+
                 XmlPullParser parser = Xml.newPullParser();
                 parser.setInput(result);
                 feedParser.parseFeed(parser);
@@ -141,11 +161,13 @@ public class RssBaseFragment extends Fragment implements RssBaseAdapter.onItemCl
         @Override
         protected void onPostExecute(List<FeedItem> items) {
             if(!items.isEmpty()) {
-                mRssBaseAdapter = new RssBaseAdapter(getContext(), items);
-                mRecyclerView.setAdapter(mRssBaseAdapter);
-                mRssBaseAdapter.setOnItemClickListener(RssBaseFragment.this);
-                mRssBaseAdapter.notifyDataSetChanged();
-                showContent();
+                if(mContext != null) {
+                    mRssBaseAdapter = new RssBaseAdapter(getActivity().getApplicationContext(), items);
+                    mRecyclerView.setAdapter(mRssBaseAdapter);
+                    mRssBaseAdapter.setOnItemClickListener(RssBaseFragment.this);
+                    mRssBaseAdapter.notifyDataSetChanged();
+                    showContent();
+                }
             } else {
                 UIUtil.showErrorDialogNotify(getActivity(),
                         getString(R.string.text_dialog_title_error),
