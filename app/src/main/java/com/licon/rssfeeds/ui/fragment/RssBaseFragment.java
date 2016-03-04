@@ -25,7 +25,6 @@ import com.licon.rssfeeds.database.constants.DBConfig;
 import com.licon.rssfeeds.ui.activity.RssBaseDetailsActivity;
 import com.licon.rssfeeds.ui.adapter.RssBaseAdapter;
 import com.licon.rssfeeds.ui.widget.TextViewRoboto;
-import com.licon.rssfeeds.util.DateFormatUtil;
 import com.licon.rssfeeds.util.UIUtil;
 import com.licon.rssfeeds.util.parser.FeedParser;
 
@@ -116,6 +115,9 @@ public class RssBaseFragment extends Fragment implements RssBaseAdapter.onItemCl
 
         @Override
         protected List<FeedItem> doInBackground(Void... params) {
+
+            DBConfig.getConfig().feedItemSQLiteHelper.deleteXDaysOldFeeds();  //  to synchronize rss news list
+
             final List<FeedItem> feedItems = new ArrayList<>();
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder().url(getRssFeedUrl()).build();
@@ -130,8 +132,7 @@ public class RssBaseFragment extends Fragment implements RssBaseAdapter.onItemCl
 
                         FeedItem historyItem = DBConfig.getConfig().feedItemSQLiteHelper.getSingleFeedItem(
                                 item.getTitle(),
-                                item.getCategory(),
-                                DateFormatUtil.parseDateToString(item.getPublicationDate()));
+                                item.getCategory());
 
                         //adding old data to view from db history
                         if(historyItem != null) {
@@ -164,7 +165,7 @@ public class RssBaseFragment extends Fragment implements RssBaseAdapter.onItemCl
         protected void onPostExecute(List<FeedItem> items) {
             if(!items.isEmpty()) {
                 if(mContext != null) {
-                    mRssBaseAdapter = new RssBaseAdapter(getActivity().getApplicationContext(), items);
+                    mRssBaseAdapter = new RssBaseAdapter(mContext, items);
                     mRecyclerView.setAdapter(mRssBaseAdapter);
                     mRssBaseAdapter.setOnItemClickListener(RssBaseFragment.this);
                     mRssBaseAdapter.notifyDataSetChanged();

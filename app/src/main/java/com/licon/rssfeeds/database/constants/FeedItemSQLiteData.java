@@ -48,4 +48,5 @@ public class FeedItemSQLiteData {
     public static final String COMMAND_DROP_RSSFEED_TABLE = "DROP TABLE IF EXISTS" + DATABASE_TABLE_NAME;
     public static final String COMMAND_SELECTALL_RSSFEED_TABLE = "SELECT * FROM " + DATABASE_TABLE_NAME;
     public static final String COMMAND_SELECT_WHERE_RSSFEED_TABLE = "SELECT * FROM " + DATABASE_TABLE_NAME + " WHERE ";
+    public static final String COMMAND_DELETE_WHERE_RSSFEED_TABLE = "DELETE FROM " + DATABASE_TABLE_NAME + " WHERE ";
 }
