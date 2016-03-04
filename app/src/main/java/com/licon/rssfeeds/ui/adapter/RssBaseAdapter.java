@@ -4,6 +4,7 @@ package com.licon.rssfeeds.ui.adapter;
  * Created by FRAMGIA\khairul.alam.licon on 26/2/16.
  */
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.licon.rssfeeds.R;
+import com.licon.rssfeeds.RssBaseApplication;
+import com.licon.rssfeeds.data.constants.AppData;
 import com.licon.rssfeeds.data.model.FeedItem;
 import com.licon.rssfeeds.ui.widget.TextViewRoboto;
 import com.licon.rssfeeds.util.DateFormatUtil;
@@ -51,6 +54,14 @@ public class RssBaseAdapter extends RecyclerView.Adapter<RssBaseAdapter.SimpleVi
         UIUtil.addTextToTextView(holder.mTextDescription, description);
         UIUtil.addTextToTextView(holder.mTextPublishedDate, published_on);
 
+        if (feed.isHistory()) {
+            UIUtil.addDrawableToView(holder.mCardView, mContext.getResources().getDrawable(R.drawable.bg_ripple_effect_white));
+        } else {
+            UIUtil.addDrawableToView(holder.mCardView, mContext.getResources().getDrawable(R.drawable.bg_ripple_effect_new_item));
+        }
+
+        UIUtil.addDrawableToView(holder.mImageThumbnail, mContext.getResources().getDrawable(R.drawable.bg_no_image_available));
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,6 +86,7 @@ public class RssBaseAdapter extends RecyclerView.Adapter<RssBaseAdapter.SimpleVi
         protected TextViewRoboto mTextDescription;
         protected TextViewRoboto mTextPublishedDate;
         protected ImageView mImageThumbnail;
+        protected CardView mCardView;
 
         public SimpleViewHolder(View itemView) {
             super(itemView);
@@ -82,6 +94,7 @@ public class RssBaseAdapter extends RecyclerView.Adapter<RssBaseAdapter.SimpleVi
             this.mTextDescription = (TextViewRoboto) itemView.findViewById(R.id.text_description);
             this.mTextPublishedDate = (TextViewRoboto) itemView.findViewById(R.id.text_published_date);
             this.mImageThumbnail = (ImageView) itemView.findViewById(R.id.image_thumbnail);
+            this.mCardView = (CardView) itemView.findViewById(R.id.cardItem);
         }
     }
 

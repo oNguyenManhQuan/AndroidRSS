@@ -42,19 +42,6 @@
                 android:textSize="@dimen/text_size_sp_12"
                 app:font="@string/font_roboto_regular" />
 
-            <com.licon.rssfeeds.ui.widget.TextViewRoboto
-                android:id="@+id/text_view_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/text_title"
-                android:layout_marginTop="@dimen/margin_size_dp_8"
-                android:gravity="center"
-                android:text="@string/text_viewed_status_new"
-                android:textColor="@color/colorAccent"
-                android:textSize="@dimen/text_size_sp_12"
-                app:font="@string/font_roboto_light" />
-
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

@@ -5,13 +5,17 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.licon.rssfeeds.R;
+import com.licon.rssfeeds.RssBaseApplication;
+import com.licon.rssfeeds.data.constants.AppData;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -30,6 +34,14 @@ public class UIUtil {
             textView.setText(text);
         } else {
             textView.setText("");
+        }
+    }
+
+    public static void addDrawableToView(View view, Drawable drawable) {
+        if(RssBaseApplication.CURRENT_SDK_VERSION < AppData.getJellyBean()) {
+            view.setBackgroundDrawable(drawable);
+        } else {
+            view.setBackground(drawable);
         }
     }
 

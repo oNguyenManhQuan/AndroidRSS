@@ -4,6 +4,8 @@ package com.licon.rssfeeds.util;
  * Created by FRAMGIA\khairul.alam.licon on 26/2/16.
  */
 
+import com.licon.rssfeeds.data.constants.AppData;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -48,9 +50,9 @@ public class DateFormatUtil {
             new SimpleDateFormat("d MMM yyyy HH:mm:ss z", Locale.getDefault()),
     };
 
-    public static Date parseDate(String date) {
+    public static Date parseDateFromString(String date) {
         for (SimpleDateFormat format : dateFormats) {
-            format.setTimeZone(TimeZone.getTimeZone("UTC"));
+            format.setTimeZone(TimeZone.getTimeZone(AppData.APP_TIME_ZONE));
             try {
                 return format.parse(date);
             } catch (ParseException e) {
@@ -71,5 +73,12 @@ public class DateFormatUtil {
             return null;
         }
         return dateFormat.format(date);
+    }
+
+    public static Long parseDateToLong(Date date) {
+        if (date != null) {
+            return date.getTime();
+        }
+        return null;
     }
 }

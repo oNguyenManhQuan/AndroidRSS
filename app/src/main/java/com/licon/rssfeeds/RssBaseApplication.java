@@ -11,6 +11,7 @@ import com.licon.rssfeeds.database.helper.FeedItemSQLiteHelper;
  */
 public class RssBaseApplication extends Application {
     public static final String DB_NAME = "RSS_FEED";
+    public static final int CURRENT_SDK_VERSION = android.os.Build.VERSION.SDK_INT;
 
     @Override
     public void onCreate() {
