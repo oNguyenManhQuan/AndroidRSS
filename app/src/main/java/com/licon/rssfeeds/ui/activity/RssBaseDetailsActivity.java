@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -15,13 +16,14 @@ import com.licon.rssfeeds.R;
 import com.licon.rssfeeds.data.constants.IntentData;
 import com.licon.rssfeeds.data.model.FeedItem;
 import com.licon.rssfeeds.ui.widget.TextViewRoboto;
+import com.licon.rssfeeds.util.AppUtil;
 import com.licon.rssfeeds.util.DateFormatUtil;
 import com.licon.rssfeeds.util.UIUtil;
 
 /**
  * Created by FRAMGIA\khairul.alam.licon on 2/3/16.
  */
-public class RssBaseDetailsActivity extends AppCompatActivity {
+public class RssBaseDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private Toolbar mToolbar;
@@ -34,6 +36,8 @@ public class RssBaseDetailsActivity extends AppCompatActivity {
     private TextViewRoboto mTextPublishedDate;
     private Button mButtonLink;
     private Button mButtonShare;
+
+    private String mLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,8 @@ public class RssBaseDetailsActivity extends AppCompatActivity {
         mButtonLink = (Button) findViewById(R.id.button_link);
         mButtonShare = (Button) findViewById(R.id.button_share);
 
+        mButtonLink.setOnClickListener(this);
+
         setupActionBar();
         getFeedViaIntent();
     }
@@ -64,8 +70,10 @@ public class RssBaseDetailsActivity extends AppCompatActivity {
 
     private void getFeedViaIntent() {
         Intent intent = this.getIntent();
-        FeedItem feedItem = (FeedItem) intent.getSerializableExtra(IntentData.DetailsData);
-        setFeedDataOnUI(feedItem);
+        if (intent != null && intent.getExtras() != null) {
+            FeedItem feedItem = (FeedItem) intent.getSerializableExtra(IntentData.DETAILS_DATA);
+            setFeedDataOnUI(feedItem);
+        }
     }
 
     private void setFeedDataOnUI(FeedItem feedItem) {
@@ -84,6 +92,8 @@ public class RssBaseDetailsActivity extends AppCompatActivity {
         UIUtil.loadImageViewFromUrl(mImageThumbnail, media_url, this);
 
         mCollapsingToolbarLayout.setTitle(!TextUtils.isEmpty(category) ? category : "");
+
+        setLink(feedItem.getLink());
     }
 
     @Override
@@ -95,5 +105,22 @@ public class RssBaseDetailsActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.button_link:
+                AppUtil.openBrowser(getApplicationContext(), getLink());
+                break;
+        }
+    }
+
+    public String getLink() {
+        return mLink;
+    }
+
+    public void setLink(String mLink) {
+        this.mLink = mLink;
     }
 }

@@ -75,7 +75,7 @@ public class RssBaseFragment extends Fragment implements RssBaseAdapter.onItemCl
     @Override
     public void onItemClick(View view, FeedItem feedItem) {
         Intent intent = new Intent(getActivity(), RssBaseDetailsActivity.class);
-        intent.putExtra(IntentData.DetailsData, feedItem);
+        intent.putExtra(IntentData.DETAILS_DATA, feedItem);
         startActivity(intent);
     }
 
