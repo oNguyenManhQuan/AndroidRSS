@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
 
+import com.licon.rssfeeds.R;
+import com.licon.rssfeeds.data.constants.AppData;
 import com.licon.rssfeeds.database.constants.DBConfig;
 import com.licon.rssfeeds.database.constants.FeedItemSQLiteData;
 import com.licon.rssfeeds.data.model.FeedItem;
@@ -84,24 +86,32 @@ public class FeedItemSQLiteHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                feedItemList.add(getFeedItemByCursor(cursor));
+                FeedItem feedItem = new FeedItem();
+                feedItem.setId(Integer.parseInt(cursor.getString(FeedItemSQLiteData.POS_COLUMN_ID_0)));
+                feedItem.setGuid(cursor.getString(FeedItemSQLiteData.POS_COLUMN_GUID_1));
+                feedItem.setTitle(cursor.getString(FeedItemSQLiteData.POS_COLUMN_TITLE_2));
+                feedItem.setLink(cursor.getString(FeedItemSQLiteData.POS_COLUMN_LINK_3));
+                feedItem.setDescription(cursor.getString(FeedItemSQLiteData.POS_COLUMN_DESCRIPTION_4));
+                feedItem.setMediaURL(cursor.getString(FeedItemSQLiteData.POS_COLUMN_MEDIA_URL_5));
+                feedItem.setCategory(cursor.getString(FeedItemSQLiteData.POS_COLUMN_CATEGORY_6));
+                feedItem.setAuthor(cursor.getString(FeedItemSQLiteData.POS_COLUMN_AUTHOR_7));
+                feedItem.setPublicationDate(new Date(cursor.getLong(FeedItemSQLiteData.POS_COLUMN_PUBLISHED_DATE_8)));
+                feedItem.setMediaSize(cursor.getLong(FeedItemSQLiteData.POS_COLUMN_MEDIA_SIZE_9));
+                feedItemList.add(feedItem);
             } while (cursor.moveToNext());
         }
         return feedItemList;
     }
 
-    public FeedItem getSingleFeedItem(String title, String category, String pubDate) {
-        FeedItem feedItem = new FeedItem();
+    public FeedItem getSingleFeedItem(String title, String category) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String Query = FeedItemSQLiteData.COMMAND_SELECT_WHERE_RSSFEED_TABLE
+        String query = FeedItemSQLiteData.COMMAND_SELECT_WHERE_RSSFEED_TABLE
                 + FeedItemSQLiteData.DATABASE_TABLE_COLUMN_TITLE
                 + " LIKE '%" + title.replace("'", "''") + "%'" + " and "
                 + FeedItemSQLiteData.DATABASE_TABLE_COLUMN_CATEGORY
-                + " = '" + category.replace("'", "''") + "'" + " and "
-                + FeedItemSQLiteData.DATABASE_TABLE_COLUMN_PUBLISHED_DATE
-                + " = '" + pubDate + "'";
+                + " = '" + category.replace("'", "''") + "'";
 
-        Cursor cursor = db.rawQuery(Query, null);
+        Cursor cursor = db.rawQuery(query, null);
 
         if (cursor.getCount() != 1) {
             cursor.close();
@@ -129,5 +139,20 @@ public class FeedItemSQLiteHelper extends SQLiteOpenHelper {
             feedItem.setMediaSize(cursor.getLong(FeedItemSQLiteData.POS_COLUMN_MEDIA_SIZE_9));
         }
         return feedItem;
+    }
+
+    public void deleteXDaysOldFeeds() {
+        String max_time_compare = String.format(mContext.getString(R.string.history_days_ago),
+                AppData.HISTORY_DELETE_STEP);
+        SQLiteDatabase db = this.getWritableDatabase();
+        for(FeedItem feedItem : getAllFeeds()) {
+            Long saved_date = DateFormatUtil.parseDateToLong(feedItem.getPublicationDate());
+            if(DateFormatUtil.getTimeDifferenceUnit(saved_date, mContext).equals(max_time_compare)) {
+                String query = FeedItemSQLiteData.COMMAND_DELETE_WHERE_RSSFEED_TABLE
+                        + FeedItemSQLiteData.DATABASE_TABLE_COLUMN_PUBLISHED_DATE
+                        + " = " + "'"+ saved_date + "'";
+                db.execSQL(query);
+            }
+        }
     }
 }

@@ -19,6 +19,8 @@ public class AppData {
     public static final String APP_TIME_ZONE = "UTC";
     // get sdk os version
     public static int getJellyBean() {
-        return android.os.Build.VERSION_CODES.JELLY_BEAN;
+        return Build.VERSION_CODES.JELLY_BEAN;
     }
+    //  Synchronization of rss news
+    public static int HISTORY_DELETE_STEP = 10;
 }
