@@ -18,6 +18,7 @@ import com.licon.rssfeeds.data.model.FeedItem;
 import com.licon.rssfeeds.ui.widget.TextViewRoboto;
 import com.licon.rssfeeds.util.AppUtil;
 import com.licon.rssfeeds.util.DateFormatUtil;
+import com.licon.rssfeeds.util.RssNewsUtil;
 import com.licon.rssfeeds.util.UIUtil;
 
 /**
@@ -56,6 +57,7 @@ public class RssBaseDetailsActivity extends AppCompatActivity implements View.On
         mButtonShare = (Button) findViewById(R.id.button_share);
 
         mButtonLink.setOnClickListener(this);
+        mButtonShare.setOnClickListener(this);
 
         setupActionBar();
         getFeedViaIntent();
@@ -92,8 +94,8 @@ public class RssBaseDetailsActivity extends AppCompatActivity implements View.On
         UIUtil.loadImageViewFromUrl(mImageThumbnail, media_url, this);
 
         mCollapsingToolbarLayout.setTitle(!TextUtils.isEmpty(category) ? category : "");
-
         setLink(feedItem.getLink());
+        RssNewsUtil.generateNews(title, published_on, description, media_url, getLink());
     }
 
     @Override
@@ -112,6 +114,10 @@ public class RssBaseDetailsActivity extends AppCompatActivity implements View.On
         switch (view.getId()) {
             case R.id.button_link:
                 AppUtil.openBrowser(getApplicationContext(), getLink());
+                break;
+            case R.id.button_share:
+                AppUtil.shareDataUsingIntent(RssNewsUtil.getNewsBuilder().toString(),
+                        getLink(), RssBaseDetailsActivity.this);
                 break;
         }
     }
