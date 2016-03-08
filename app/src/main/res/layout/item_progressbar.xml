@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/color_gray_rgb_184"
+    android:padding="@dimen/margin_size_dp_4">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/AppProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/text_loading"
+        android:layout_toStartOf="@+id/text_loading"/>
+
+    <com.licon.rssfeeds.ui.widget.TextViewRoboto
+        android:id="@+id/text_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/margin_size_dp_4"
+        android:text="@string/pagination_scroll_load_more"
+        android:textColor="@color/color_gray_rgb_95"
+        android:textSize="@dimen/text_size_sp_18"
+        app:font="@string/font_roboto_regular"/>
+
+</RelativeLayout>

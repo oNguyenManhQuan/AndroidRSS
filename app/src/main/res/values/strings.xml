@@ -39,8 +39,10 @@
     <string name="text_touch_to_reload">Please touch to reload</string>
     <string name="text_emoticon_sad">:(</string>
     <string name="text_dialog_title_error">Error</string>
+    <string name="text_dialog_title_sorry">Sorry</string>
     <string name="text_dialog_btn_ok">Okay</string>
     <string name="text_dialog_msg_no_data">No data found!</string>
+    <string name="text_dialog_msg_no_more_data">No more data found!</string>
 
     <!-- feed item -->
     <string name="text_dummy_title">Title</string>
@@ -72,4 +74,6 @@
     <string name="share_via">Share via...</string>
     <string name="share_no_application_found">No application found to share! Please install one.</string>
 
+    <!-- pagination status -->
+    <string name="pagination_scroll_load_more">Scroll to load...</string>
 </resources>

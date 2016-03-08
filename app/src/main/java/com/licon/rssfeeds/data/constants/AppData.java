@@ -21,6 +21,10 @@ public class AppData {
     public static int getJellyBean() {
         return Build.VERSION_CODES.JELLY_BEAN;
     }
-    //  Synchronization of rss news
+    // synchronization of rss news
     public static int HISTORY_DELETE_STEP = 10;
+    // pagination
+    public static int PAGINATION_TIME_OUT = 1500;
+    public static int PAGINATION_DEFAULT_LIMIT = 10;
+    public static int PAGINATION_RECYCLER_THRESHOLD = 5;
 }
