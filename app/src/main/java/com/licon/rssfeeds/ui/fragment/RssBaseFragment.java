@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,11 +20,13 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.licon.rssfeeds.R;
+import com.licon.rssfeeds.data.constants.AppData;
 import com.licon.rssfeeds.data.constants.IntentData;
 import com.licon.rssfeeds.data.model.FeedItem;
 import com.licon.rssfeeds.database.constants.DBConfig;
 import com.licon.rssfeeds.ui.activity.RssBaseDetailsActivity;
 import com.licon.rssfeeds.ui.adapter.RssBaseAdapter;
+import com.licon.rssfeeds.ui.listener.RssBaseOnScrollListener;
 import com.licon.rssfeeds.ui.widget.TextViewRoboto;
 import com.licon.rssfeeds.util.UIUtil;
 import com.licon.rssfeeds.util.parser.FeedParser;
@@ -45,12 +48,19 @@ public class RssBaseFragment extends Fragment implements RssBaseAdapter.onItemCl
 
     private RssBaseAdapter mRssBaseAdapter;
     private String mRssFeedUrl;
+    private List<FeedItem> mFeedItemsAll;
+    private List<FeedItem> mFeedItemsPaginated;
 
+    private LinearLayoutManager mLinearLayoutManager;
     private RecyclerView mRecyclerView;
     private LinearLayout mLayoutErrorLoad;
     private TextViewRoboto mTextErrorLoad;
     private ProgressBar mProgressBar;
     private Context mContext;
+
+    // pagination
+    private int mLimit = AppData.PAGINATION_DEFAULT_LIMIT;
+    private Handler mHandler;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,12 +71,27 @@ public class RssBaseFragment extends Fragment implements RssBaseAdapter.onItemCl
         mTextErrorLoad = (TextViewRoboto) view.findViewById(R.id.text_error_reload);
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressbar_loading);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
-        new LoadData().execute();
         mTextErrorLoad.setOnClickListener(this);
         mContext = getActivity().getApplicationContext();
+
+        mFeedItemsAll = new ArrayList<>();
+        mFeedItemsPaginated = new ArrayList<>();
+        new LoadData().execute();
+
+        mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mRecyclerView.setHasFixedSize(true);
+        mRssBaseAdapter = new RssBaseAdapter(mContext, mFeedItemsPaginated);
+        mRecyclerView.setAdapter(mRssBaseAdapter);
+        mRssBaseAdapter.setOnItemClickListener(RssBaseFragment.this);
+
+        mRecyclerView.setOnScrollListener(new RssBaseOnScrollListener(mLinearLayoutManager) {
+            @Override
+            public void onLoadMore() {
+                loadMoreData();
+            }
+        });
 
         return view;
     }
@@ -165,10 +190,8 @@ public class RssBaseFragment extends Fragment implements RssBaseAdapter.onItemCl
         protected void onPostExecute(List<FeedItem> items) {
             if(!items.isEmpty()) {
                 if(mContext != null) {
-                    mRssBaseAdapter = new RssBaseAdapter(mContext, items);
-                    mRecyclerView.setAdapter(mRssBaseAdapter);
-                    mRssBaseAdapter.setOnItemClickListener(RssBaseFragment.this);
-                    mRssBaseAdapter.notifyDataSetChanged();
+                    mFeedItemsAll = items;
+                    loadDefaultData();
                     showContent();
                 }
             } else {
@@ -178,6 +201,45 @@ public class RssBaseFragment extends Fragment implements RssBaseAdapter.onItemCl
                         getString(R.string.text_dialog_btn_ok));
             }
         }
+    }
+
+    private void loadDefaultData() {
+        try {
+            for (int i = 0; i <= mLimit; i++) {
+                mFeedItemsPaginated.add(mFeedItemsAll.get(i));
+            }
+        } catch (IndexOutOfBoundsException e) {
+            UIUtil.showErrorDialogNotify(getActivity(),
+                    getString(R.string.text_dialog_title_sorry),
+                    getString(R.string.text_dialog_msg_no_more_data),
+                    getString(R.string.text_dialog_btn_ok));
+        }
+    }
+
+    private void loadMoreData() {
+        mHandler = new Handler();
+        mFeedItemsPaginated.add(null);
+        mRssBaseAdapter.notifyItemInserted(mFeedItemsPaginated.size() - 1);
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mFeedItemsPaginated.remove(mFeedItemsPaginated.size() - 1);
+                mRssBaseAdapter.notifyItemRemoved(mFeedItemsPaginated.size());
+                int start = mFeedItemsPaginated.size();
+                int end = start + mLimit;
+                try {
+                    for (int i = start; i <= end; i++) {
+                        mFeedItemsPaginated.add(mFeedItemsAll.get(i));
+                        mRssBaseAdapter.notifyItemInserted(mFeedItemsPaginated.size());
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    UIUtil.showErrorDialogNotify(getActivity(),
+                            getString(R.string.text_dialog_title_sorry),
+                            getString(R.string.text_dialog_msg_no_more_data),
+                            getString(R.string.text_dialog_btn_ok));
+                }
+            }
+        }, AppData.PAGINATION_TIME_OUT);
     }
 
     public String getRssFeedUrl() {
