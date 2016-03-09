@@ -68,4 +68,8 @@
     <string name="history_years_ago">%d years ago</string>
     <string name="history_one_year_ago">one year ago</string>
 
+    <!-- Share constants -->
+    <string name="share_via">Share via...</string>
+    <string name="share_no_application_found">No application found to share! Please install one.</string>
+
 </resources>
