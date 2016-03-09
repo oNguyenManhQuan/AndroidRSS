@@ -11,7 +11,6 @@ import com.licon.rssfeeds.data.constants.AppData;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -100,21 +99,17 @@ public class DateFormatUtil {
     }
 
     public static Long getCurrentDate() {
-        Calendar calendar = Calendar.getInstance();
-        if(calendar.getTime() != null) {
-            parseDateToLong(calendar.getTime());
-        }
-        return null;
+        return System.currentTimeMillis();
     }
 
     public static String getTimeDifferenceUnit(long delta, Context context)
     {
         long difference = 0;
-        Long mDate = System.currentTimeMillis();
+        Long date = getCurrentDate();
 
-        if(mDate > delta)
+        if(date > delta)
         {
-            difference= mDate - delta;
+            difference = date - delta;
             final long seconds = difference/CLOCK_UNIT_1000;
             final long minutes = seconds/CLOCK_UNIT_60;
             final long hours = minutes/CLOCK_UNIT_60;

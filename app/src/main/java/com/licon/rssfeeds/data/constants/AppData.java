@@ -2,6 +2,9 @@ package com.licon.rssfeeds.data.constants;
 
 import android.os.Build;
 
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Rectangle;
+
 /**
  * Created by FRAMGIA\khairul.alam.licon on 24/2/16.
  */
@@ -27,4 +30,8 @@ public class AppData {
     public static int PAGINATION_TIME_OUT = 1500;
     public static int PAGINATION_DEFAULT_LIMIT = 10;
     public static int PAGINATION_RECYCLER_THRESHOLD = 5;
+    // file & folder to print news
+    public static String APP_FOLDER_NAME = "VOA";
+    public static String FILE_FORMAT_PDF = ".pdf";
+    public static Rectangle PDF_PAGE_DEFAULT_SIZE = PageSize.A4;
 }

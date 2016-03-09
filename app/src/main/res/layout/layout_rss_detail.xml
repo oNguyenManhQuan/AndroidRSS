@@ -92,6 +92,15 @@
             android:text="@string/button_link" />
 
         <Button
+            android:id="@+id/button_print"
+            style="@style/AppRegularButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/button_print" />
+
+        <Button
             android:id="@+id/button_share"
             style="@style/AppRegularButton"
             android:layout_width="wrap_content"

@@ -43,6 +43,7 @@
     <string name="text_dialog_btn_ok">Okay</string>
     <string name="text_dialog_msg_no_data">No data found!</string>
     <string name="text_dialog_msg_no_more_data">No more data found!</string>
+    <string name="text_dialog_msg_no_application">No application found! Please install one.</string>
 
     <!-- feed item -->
     <string name="text_dummy_title">Title</string>
@@ -52,6 +53,7 @@
     <!-- feed item details -->
     <string name="button_link">Link</string>
     <string name="button_share">Share</string>
+    <string name="button_print">Print</string>
     <string name="text_dummy_author">Author Name</string>
     <string name="text_error_image_load">Image not found!</string>
 
@@ -70,9 +72,16 @@
     <string name="history_years_ago">%d years ago</string>
     <string name="history_one_year_ago">one year ago</string>
 
-    <!-- Share constants -->
+    <!-- share constants -->
     <string name="share_via">Share via...</string>
-    <string name="share_no_application_found">No application found to share! Please install one.</string>
+
+    <!-- printing using pdf -->
+    <string name="pdf_dialog_title_print">Pdf to print</string>
+    <string name="pdf_dialog_msg_print">Pdf file is successfully created in %s . \n\nYou can print now.</string>
+    <string name="pdf_dialog_msg_print_error">No file found!</string>
+    <string name="pdf_dialog_msg_sdcard_error">Please check your SD card!</string>
+    <string name="pdf_dialog_action_view">View</string>
+    <string name="pdf_dialog_action_close">Close</string>
 
     <!-- pagination status -->
     <string name="pagination_scroll_load_more">Scroll to load...</string>
