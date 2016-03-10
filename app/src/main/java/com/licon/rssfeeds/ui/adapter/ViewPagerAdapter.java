@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.licon.rssfeeds.RssBaseApplication;
 import com.licon.rssfeeds.data.constants.AppData;
 import com.licon.rssfeeds.data.constants.RSSData;
 import com.licon.rssfeeds.ui.fragment.OthersFragment;
@@ -23,38 +24,51 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Fragment mFragment = null;
         RssBaseFragment rssBaseFragment = new RssBaseFragment();
-
         switch (position) {
             case AppData.TAB_USA_HOME:
                 rssBaseFragment.setRssFeedUrl(RSSData.XML_URL_USA_HOME);
-                mFragment = rssBaseFragment;
-                break;
+                rssBaseFragment.setCategory(RSSData.ATTRIBUTE_CAT_USA_HOME);
+                return rssBaseFragment;
             case AppData.TAB_TECHNOLOGY:
                 rssBaseFragment.setRssFeedUrl(RSSData.XML_URL_TECHNOLOGY);
-                mFragment = rssBaseFragment;
-                break;
+                rssBaseFragment.setCategory(RSSData.ATTRIBUTE_CAT_TECHNOLOGY);
+                return rssBaseFragment;
             case AppData.TAB_BUSINESS:
                 rssBaseFragment.setRssFeedUrl(RSSData.XML_URL_BUSINESS);
-                mFragment = rssBaseFragment;
-                break;
+                rssBaseFragment.setCategory(RSSData.ATTRIBUTE_CAT_BUSINESS);
+                return rssBaseFragment;
             case AppData.TAB_HEALTH:
                 rssBaseFragment.setRssFeedUrl(RSSData.XML_URL_HEALTH);
-                mFragment = rssBaseFragment;
-                break;
+                rssBaseFragment.setCategory(RSSData.ATTRIBUTE_CAT_HEALTH);
+                return rssBaseFragment;
             case AppData.TAB_ENTERTAINMENT:
                 rssBaseFragment.setRssFeedUrl(RSSData.XML_URL_ENTERTAINMENT);
-                mFragment = rssBaseFragment;
-                break;
+                rssBaseFragment.setCategory(RSSData.ATTRIBUTE_CAT_ENTERTAINMENT);
+                return rssBaseFragment;
             case AppData.TAB_OTHERS:
-                mFragment = new OthersFragment();
-                break;
-            default:
-                rssBaseFragment.setRssFeedUrl(RSSData.XML_URL_USA_HOME);
-                mFragment = rssBaseFragment;
+                return new OthersFragment();
         }
-        return mFragment;
+        return null;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        switch (position) {
+            case AppData.TAB_USA_HOME:
+                return RssBaseApplication.TAB_USA_HOME;
+            case AppData.TAB_TECHNOLOGY:
+                return RssBaseApplication.TAB_TECHNOLOGY;
+            case AppData.TAB_BUSINESS:
+                return RssBaseApplication.TAB_BUSINESS;
+            case AppData.TAB_HEALTH:
+                return RssBaseApplication.TAB_HEALTH;
+            case AppData.TAB_ENTERTAINMENT:
+                return RssBaseApplication.TAB_ENTERTAINMENT;
+            case AppData.TAB_OTHERS:
+                return RssBaseApplication.TAB_OTHERS;
+        }
+        return null;
     }
 
     @Override

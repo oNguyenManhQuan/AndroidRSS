@@ -9,9 +9,11 @@
     <dimen name="text_size_sp_14">14sp</dimen>
     <dimen name="text_size_sp_18">18sp</dimen>
     <dimen name="text_size_sp_22">22sp</dimen>
+    <dimen name="text_size_sp_24">24sp</dimen>
     <dimen name="text_size_sp_48">48sp</dimen>
 
     <!-- App margins and padding -->
+    <dimen name="margin_size_dp_2">2dp</dimen>
     <dimen name="margin_size_dp_4">4dp</dimen>
     <dimen name="margin_size_dp_8">8dp</dimen>
     <dimen name="margin_size_dp_12">12dp</dimen>
@@ -27,8 +29,8 @@
     <dimen name="banner_height">200dp</dimen>
 
     <!-- feed item dimen -->
-    <dimen name="feed_thumbnail_height">54dp</dimen>
-    <dimen name="feed_thumbnail_width">54dp</dimen>
+    <dimen name="feed_thumbnail_height">64dp</dimen>
+    <dimen name="feed_thumbnail_width">110dp</dimen>
 
     <!-- others fragment grid item dimenstion -->
     <dimen name="grid_padding_top">16dp</dimen>

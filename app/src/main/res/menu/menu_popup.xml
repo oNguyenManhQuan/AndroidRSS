@@ -4,35 +4,35 @@
     <item
         android:id="@+id/action_open_home"
         android:showAsAction="ifRoom|withText"
-        android:title="@string/rss_category_usa_home"
+        android:title="@string/tab_usa_home"
         android:visible="true"/>
     <item
         android:id="@+id/action_open_technology"
         android:showAsAction="ifRoom|withText"
-        android:title="@string/rss_category_tech"
+        android:title="@string/tab_tech"
         android:visible="true"/>
     <item
         android:id="@+id/action_open_business"
         android:showAsAction="ifRoom|withText"
-        android:title="@string/rss_category_business"
+        android:title="@string/tab_business"
         android:visible="true"/>
 
     <item
         android:id="@+id/action_open_health"
         android:showAsAction="ifRoom|withText"
-        android:title="@string/rss_category_health"
+        android:title="@string/tab_health"
         android:visible="true"/>
 
     <item
         android:id="@+id/action_open_entertainment"
         android:showAsAction="ifRoom|withText"
-        android:title="@string/rss_category_entertainment"
+        android:title="@string/tab_entertainment"
         android:visible="true"/>
 
     <item
         android:id="@+id/action_open_others"
         android:showAsAction="ifRoom|withText"
-        android:title="@string/rss_category_others"
+        android:title="@string/tab_others"
         android:visible="true"/>
 
 </menu>

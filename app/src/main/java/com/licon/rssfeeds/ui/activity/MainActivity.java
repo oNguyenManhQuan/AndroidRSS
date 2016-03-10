@@ -4,7 +4,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -19,6 +18,7 @@ import android.view.View;
 import com.licon.rssfeeds.R;
 import com.licon.rssfeeds.data.constants.AppData;
 import com.licon.rssfeeds.ui.adapter.ViewPagerAdapter;
+import com.licon.rssfeeds.util.AppUtil;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener, PopupMenu.OnMenuItemClickListener {
@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setupActionBar();
         setupViewPagerWithTabs();
         mNavigationView.setNavigationItemSelectedListener(this);
+        AppUtil.showInternetWarning(this);
     }
 
     private void setupActionBar() {
@@ -83,25 +84,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mViewPagerAdapter);
         mTablayout.setupWithViewPager(mViewPager);
-
-        addTab(R.string.rss_category_usa_home, R.drawable.ic_tab_usa_home, AppData.TAB_USA_HOME);
-        addTab(R.string.rss_category_tech, R.drawable.ic_tab_tech, AppData.TAB_TECHNOLOGY);
-        addTab(R.string.rss_category_business, R.drawable.ic_tab_business, AppData.TAB_BUSINESS);
-        addTab(R.string.rss_category_health, R.drawable.ic_tab_health, AppData.TAB_HEALTH);
-        addTab(R.string.rss_category_entertainment, R.drawable.ic_tab_entertainment, AppData.TAB_ENTERTAINMENT);
-        addTab(R.string.rss_category_others, R.drawable.ic_tab_others, AppData.TAB_OTHERS);
-
-        mTablayout.setTabTextColors(ContextCompat.getColorStateList(this, R.color.tab_selector));
-        mTablayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.tabIndicator));
-
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTablayout));
+        mTablayout.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+        addTabIcon();
     }
 
-    private void addTab(int textResId, int iconResId, int position) {
-        TabLayout.Tab tabLayout = mTablayout.newTab();
-        tabLayout.setText(getResources().getString(textResId));
-        tabLayout.setIcon(getResources().getDrawable(iconResId));
-        mTablayout.addTab(tabLayout, position);
+    private void addTabIcon() {
+        mTablayout.getTabAt(AppData.TAB_USA_HOME).setIcon(R.drawable.ic_tab_usa_home);
+        mTablayout.getTabAt(AppData.TAB_TECHNOLOGY).setIcon(R.drawable.ic_tab_tech);
+        mTablayout.getTabAt(AppData.TAB_BUSINESS).setIcon(R.drawable.ic_tab_business);
+        mTablayout.getTabAt(AppData.TAB_HEALTH).setIcon(R.drawable.ic_tab_health);
+        mTablayout.getTabAt(AppData.TAB_ENTERTAINMENT).setIcon(R.drawable.ic_tab_entertainment);
+        mTablayout.getTabAt(AppData.TAB_OTHERS).setIcon(R.drawable.ic_tab_others);
     }
 
     @Override

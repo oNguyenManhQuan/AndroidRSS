@@ -28,6 +28,7 @@ import com.licon.rssfeeds.ui.activity.RssBaseDetailsActivity;
 import com.licon.rssfeeds.ui.adapter.RssBaseAdapter;
 import com.licon.rssfeeds.ui.listener.RssBaseOnScrollListener;
 import com.licon.rssfeeds.ui.widget.TextViewRoboto;
+import com.licon.rssfeeds.util.AppUtil;
 import com.licon.rssfeeds.util.UIUtil;
 import com.licon.rssfeeds.util.parser.FeedParser;
 
@@ -48,6 +49,7 @@ public class RssBaseFragment extends Fragment implements RssBaseAdapter.onItemCl
 
     private RssBaseAdapter mRssBaseAdapter;
     private String mRssFeedUrl;
+    private String mCategory;
     private List<FeedItem> mFeedItemsAll;
     private List<FeedItem> mFeedItemsPaginated;
 
@@ -140,47 +142,54 @@ public class RssBaseFragment extends Fragment implements RssBaseAdapter.onItemCl
 
         @Override
         protected List<FeedItem> doInBackground(Void... params) {
-
             DBConfig.getConfig().feedItemSQLiteHelper.deleteXDaysOldFeeds();  //  to synchronize rss news list
-
             final List<FeedItem> feedItems = new ArrayList<>();
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder().url(getRssFeedUrl()).build();
-            try {
-                Response response = client.newCall(request).execute();
-                Reader result = response.body().charStream();
-                FeedParser feedParser = new FeedParser();
-
-                feedParser.setOnFeedItemHandler(new FeedParser.FeedItemHandler() {
-                    @Override
-                    public void OnFeedItem(FeedParser feedParser, FeedItem item) {
-
-                        FeedItem historyItem = DBConfig.getConfig().feedItemSQLiteHelper.getSingleFeedItem(
-                                item.getTitle(),
-                                item.getCategory());
-
-                        //adding old data to view from db history
-                        if(historyItem != null) {
-                            historyItem.setHistory(true);
-                            feedItems.add(historyItem);
-                        //adding new data to view from web
-                        } else {
-                            DBConfig.getConfig().feedItemSQLiteHelper.addRssFeed(item);
-                            item.setHistory(false);
-                            feedItems.add(item);
-                        }
+            if (AppUtil.isNetworkConnected(mContext)) {
+                if(AppUtil.isHostAvailable()) {
+                    OkHttpClient client = new OkHttpClient();
+                    Request request = new Request.Builder().url(getRssFeedUrl()).build();
+                    try {
+                        Response response = client.newCall(request).execute();
+                        Reader result = response.body().charStream();
+                        FeedParser feedParser = new FeedParser();
+                        feedParser.setOnFeedItemHandler(new FeedParser.FeedItemHandler() {
+                            @Override
+                            public void OnFeedItem(FeedParser feedParser, FeedItem item) {
+                                FeedItem historyItem = DBConfig.getConfig().feedItemSQLiteHelper
+                                        .getSingleFeedItem(
+                                                item.getTitle(),
+                                                item.getCategory());
+                                //adding old data to view from db history
+                                if (historyItem != null) {
+                                    historyItem.setHistory(true);
+                                    feedItems.add(historyItem);
+                                //adding new data to view from web
+                                } else {
+                                    DBConfig.getConfig().feedItemSQLiteHelper.addRssFeed(item);
+                                    item.setHistory(false);
+                                    feedItems.add(item);
+                                }
+                            }
+                        });
+                        XmlPullParser parser = Xml.newPullParser();
+                        parser.setInput(result);
+                        feedParser.parseFeed(parser);
+                    } catch (IOException e) {
+                        return null;
+                    } catch (XmlPullParserException xmlPullParserException) {
+                        return null;
+                    } catch (FeedParser.UnknownFeedException unknownFeedException) {
+                        return null;
                     }
-                });
-
-                XmlPullParser parser = Xml.newPullParser();
-                parser.setInput(result);
-                feedParser.parseFeed(parser);
-            } catch (IOException e) {
-                return null;
-            } catch (XmlPullParserException xmlPullParserException) {
-                return null;
-            } catch (FeedParser.UnknownFeedException unknownFeedException) {
-                return null;
+                }
+            } else {
+                List<FeedItem> feedItemsTmp = new ArrayList<>();
+                feedItemsTmp = DBConfig.getConfig().feedItemSQLiteHelper
+                        .getAllFeedsByCategory(getCategory());
+                for(FeedItem feedItem : feedItemsTmp) {
+                    feedItems.add(feedItem);
+                    feedItem.setHistory(true);
+                }
             }
 
             return feedItems;
@@ -202,6 +211,7 @@ public class RssBaseFragment extends Fragment implements RssBaseAdapter.onItemCl
                         getString(R.string.text_dialog_btn_ok),
                         null,
                         UIUtil.getDefaultDismissListener());
+                showErrorToReload();
             }
         }
     }
@@ -212,13 +222,7 @@ public class RssBaseFragment extends Fragment implements RssBaseAdapter.onItemCl
                 mFeedItemsPaginated.add(mFeedItemsAll.get(i));
             }
         } catch (IndexOutOfBoundsException e) {
-            UIUtil.showDialogNotify(getActivity(),
-                    getActivity().getString(R.string.text_dialog_title_sorry),
-                    getActivity().getString(R.string.text_dialog_msg_no_data),
-                    null,
-                    getActivity().getString(R.string.text_dialog_btn_ok),
-                    null,
-                    UIUtil.getDefaultDismissListener());
+
         }
     }
 
@@ -239,13 +243,7 @@ public class RssBaseFragment extends Fragment implements RssBaseAdapter.onItemCl
                         mRssBaseAdapter.notifyItemInserted(mFeedItemsPaginated.size());
                     }
                 } catch (IndexOutOfBoundsException e) {
-                    UIUtil.showDialogNotify(getActivity(),
-                            getActivity().getString(R.string.text_dialog_title_sorry),
-                            getActivity().getString(R.string.text_dialog_msg_no_more_data),
-                            null,
-                            getActivity().getString(R.string.text_dialog_btn_ok),
-                            null,
-                            UIUtil.getDefaultDismissListener());
+
                 }
             }
         }, AppData.PAGINATION_TIME_OUT);
@@ -257,5 +255,13 @@ public class RssBaseFragment extends Fragment implements RssBaseAdapter.onItemCl
 
     public void setRssFeedUrl(String mRssFeedUrl) {
         this.mRssFeedUrl = mRssFeedUrl;
+    }
+
+    public String getCategory() {
+        return mCategory;
+    }
+
+    public void setCategory(String mCategory) {
+        this.mCategory = mCategory;
     }
 }

@@ -103,6 +103,33 @@ public class FeedItemSQLiteHelper extends SQLiteOpenHelper {
         return feedItemList;
     }
 
+    public List<FeedItem> getAllFeedsByCategory(String category) {
+        List<FeedItem> feedItemList = new ArrayList<FeedItem>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = FeedItemSQLiteData.COMMAND_SELECT_WHERE_RSSFEED_TABLE
+                + FeedItemSQLiteData.DATABASE_TABLE_COLUMN_CATEGORY
+                + " = '" + category.replace("'", "''") + "'";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                FeedItem feedItem = new FeedItem();
+                feedItem.setId(Integer.parseInt(cursor.getString(FeedItemSQLiteData.POS_COLUMN_ID_0)));
+                feedItem.setGuid(cursor.getString(FeedItemSQLiteData.POS_COLUMN_GUID_1));
+                feedItem.setTitle(cursor.getString(FeedItemSQLiteData.POS_COLUMN_TITLE_2));
+                feedItem.setLink(cursor.getString(FeedItemSQLiteData.POS_COLUMN_LINK_3));
+                feedItem.setDescription(cursor.getString(FeedItemSQLiteData.POS_COLUMN_DESCRIPTION_4));
+                feedItem.setMediaURL(cursor.getString(FeedItemSQLiteData.POS_COLUMN_MEDIA_URL_5));
+                feedItem.setCategory(cursor.getString(FeedItemSQLiteData.POS_COLUMN_CATEGORY_6));
+                feedItem.setAuthor(cursor.getString(FeedItemSQLiteData.POS_COLUMN_AUTHOR_7));
+                feedItem.setPublicationDate(new Date(cursor.getLong(FeedItemSQLiteData.POS_COLUMN_PUBLISHED_DATE_8)));
+                feedItem.setMediaSize(cursor.getLong(FeedItemSQLiteData.POS_COLUMN_MEDIA_SIZE_9));
+                feedItemList.add(feedItem);
+            } while (cursor.moveToNext());
+        }
+        return feedItemList;
+    }
+
     public FeedItem getSingleFeedItem(String title, String category) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = FeedItemSQLiteData.COMMAND_SELECT_WHERE_RSSFEED_TABLE

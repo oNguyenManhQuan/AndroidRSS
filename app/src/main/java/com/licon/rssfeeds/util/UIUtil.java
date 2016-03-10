@@ -18,6 +18,8 @@ import com.licon.rssfeeds.RssBaseApplication;
 import com.licon.rssfeeds.data.constants.AppData;
 
 import java.io.InputStream;
+import java.lang.ref.WeakReference;
+import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
@@ -76,45 +78,75 @@ public class UIUtil {
         dialog.show();
     }
 
-    public static void loadImageViewFromUrl(ImageView imageView, String image_url, Activity activity) {
-        mImageView = imageView;
-        mActivity = activity;
-        new LoadImage().execute(image_url);
+    public static void showDialogNotifyOnUIThread(final Activity activity, final String title, final String msg,
+                                                  final String strOk, final String strCancel,
+                                                  final DialogInterface.OnClickListener onOkClickListener,
+                                                  final DialogInterface.OnClickListener onCancelClickListener) {
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showDialogNotify(activity, title, msg, strOk, strCancel,
+                        onOkClickListener, onCancelClickListener);
+            }
+        });
     }
 
-    private static class LoadImage extends AsyncTask<String, String, Bitmap> {
+    public static void loadImageViewFromUrl(ImageView imageView, String image_url, Drawable errorDrawable) {
+        mImageView = imageView;
+        new LoadImage(imageView, errorDrawable).execute(image_url);
+    }
+
+    private static class LoadImage extends AsyncTask<String, Void, Bitmap> {
+        private final WeakReference<ImageView> imageViewReference;
+        private Drawable placeholer;
+
+        public LoadImage(ImageView imageView, Drawable errorImage) {
+            imageViewReference = new WeakReference<ImageView>(imageView);
+            placeholer = errorImage;
+        }
+
         @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(mActivity);
-            pDialog.setMessage(mActivity.getString(R.string.splash_loading));
-            pDialog.show();
+        protected Bitmap doInBackground(String... params) {
+            return downloadBitmap(params[0]);
         }
 
-        protected Bitmap doInBackground(String... args) {
-            try {
-                mBitmap = BitmapFactory.decodeStream((InputStream) new URL(args[0]).getContent());
-            } catch (Exception e) {
-                e.printStackTrace();
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            if (isCancelled()) {
+                bitmap = null;
             }
-            return mBitmap;
-        }
 
-        protected void onPostExecute(Bitmap image) {
-            if(image != null) {
-                mImageView.setImageBitmap(image);
-                pDialog.dismiss();
-            } else {
-                pDialog.dismiss();
-
-                showDialogNotify(mActivity,
-                        mActivity.getString(R.string.text_dialog_title_error),
-                        mActivity.getString(R.string.text_error_image_load),
-                        null,
-                        mActivity.getString(R.string.text_dialog_btn_ok),
-                        null,
-                        getDefaultDismissListener());
+            if (imageViewReference != null) {
+                ImageView imageView = imageViewReference.get();
+                if (imageView != null) {
+                    if (bitmap != null) {
+                        imageView.setImageBitmap(bitmap);
+                    } else {
+                        imageView.setImageDrawable(placeholer);
+                    }
+                }
             }
         }
+    }
+
+    private static Bitmap downloadBitmap(String url) {
+        HttpURLConnection urlConnection = null;
+        try {
+            URL uri = new URL(url);
+            urlConnection = (HttpURLConnection) uri.openConnection();
+            InputStream inputStream = urlConnection.getInputStream();
+            if (inputStream != null) {
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                return bitmap;
+            }
+        } catch (Exception e) {
+            urlConnection.disconnect();
+
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+        }
+        return null;
     }
 }

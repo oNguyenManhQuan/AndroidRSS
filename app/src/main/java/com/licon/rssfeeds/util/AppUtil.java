@@ -5,12 +5,15 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Parcelable;
 
 import com.licon.rssfeeds.R;
 import com.licon.rssfeeds.data.constants.IntentData;
 
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 import android.os.Environment;
@@ -86,5 +89,33 @@ public class AppUtil {
             return true;
         }
         return false;
+    }
+
+    public static boolean isNetworkConnected(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
+    public static boolean isHostAvailable() {
+        try {
+            InetAddress ipAddr = InetAddress.getByName(AppData.HOST_URL);
+            return (ipAddr.equals("")) ? false : true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static void showInternetWarning(Activity activity) {
+        if (!isNetworkConnected(activity)) {
+            UIUtil.showDialogNotifyOnUIThread(activity,
+                    activity.getString(R.string.text_dialog_title_warning),
+                    activity.getString(R.string.text_dialog_msg_no_internet),
+                    null,
+                    activity.getString(R.string.text_dialog_btn_ok),
+                    null,
+                    UIUtil.getDefaultDismissListener());
+        }
     }
 }
