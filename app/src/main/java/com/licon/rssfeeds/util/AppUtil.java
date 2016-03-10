@@ -13,6 +13,12 @@ import com.licon.rssfeeds.data.constants.IntentData;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.os.Environment;
+
+import com.licon.rssfeeds.data.constants.AppData;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 
 /**
  * Created by FRAMGIA\khairul.alam.licon on 4/3/16.
@@ -36,7 +42,7 @@ public class AppUtil {
             for(ResolveInfo resInfo : resInfos) {
                 String packageName = resInfo.activityInfo.packageName;
 
-                Intent intent=new Intent();
+                Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_SEND);
                 intent.setType(IntentData.SHARE_TYPE_PLAIN_TEXT);
                 intent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -62,11 +68,23 @@ public class AppUtil {
                 chooserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 activity.startActivity(chooserIntent);
             } else {
-                UIUtil.showErrorDialogNotify(activity,
+                UIUtil.showDialogNotify(activity,
                         activity.getString(R.string.text_dialog_title_error),
-                        activity.getString(R.string.share_no_application_found),
-                        activity.getString(R.string.text_dialog_btn_ok));
+                        activity.getString(R.string.text_dialog_msg_no_application),
+                        null,
+                        activity.getString(R.string.text_dialog_btn_ok),
+                        null,
+                        UIUtil.getDefaultDismissListener());
             }
         }
+    }
+
+    public static boolean createAppFolderIfNotExists(Activity activity) throws FileNotFoundException {
+        File pdfFolder = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), AppData.APP_FOLDER_NAME);
+        if (!pdfFolder.exists()) {
+            pdfFolder.mkdir();
+            return true;
+        }
+        return false;
     }
 }

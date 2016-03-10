@@ -12,14 +12,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.itextpdf.text.DocumentException;
 import com.licon.rssfeeds.R;
 import com.licon.rssfeeds.data.constants.IntentData;
 import com.licon.rssfeeds.data.model.FeedItem;
 import com.licon.rssfeeds.ui.widget.TextViewRoboto;
 import com.licon.rssfeeds.util.AppUtil;
 import com.licon.rssfeeds.util.DateFormatUtil;
+import com.licon.rssfeeds.util.FileUtil;
 import com.licon.rssfeeds.util.RssNewsUtil;
 import com.licon.rssfeeds.util.UIUtil;
+
+import java.io.FileNotFoundException;
 
 /**
  * Created by FRAMGIA\khairul.alam.licon on 2/3/16.
@@ -37,6 +41,7 @@ public class RssBaseDetailsActivity extends AppCompatActivity implements View.On
     private TextViewRoboto mTextPublishedDate;
     private Button mButtonLink;
     private Button mButtonShare;
+    private Button mButtonPrint;
 
     private String mLink;
 
@@ -55,9 +60,11 @@ public class RssBaseDetailsActivity extends AppCompatActivity implements View.On
         mTextPublishedDate = (TextViewRoboto) findViewById(R.id.text_published_date);
         mButtonLink = (Button) findViewById(R.id.button_link);
         mButtonShare = (Button) findViewById(R.id.button_share);
+        mButtonPrint = (Button) findViewById(R.id.button_print);
 
         mButtonLink.setOnClickListener(this);
         mButtonShare.setOnClickListener(this);
+        mButtonPrint.setOnClickListener(this);
 
         setupActionBar();
         getFeedViaIntent();
@@ -115,6 +122,16 @@ public class RssBaseDetailsActivity extends AppCompatActivity implements View.On
             case R.id.button_link:
                 AppUtil.openBrowser(getApplicationContext(), getLink());
                 break;
+            case R.id.button_print:
+                    try {
+                        FileUtil.createPdfToPrint(RssBaseDetailsActivity.this,
+                                RssNewsUtil.getNewsBuilder().toString());
+                    } catch (DocumentException e) {
+                        showExceptionMessage(e.getMessage());
+                    } catch (FileNotFoundException e) {
+                        showExceptionMessage(e.getMessage());
+                    }
+                break;
             case R.id.button_share:
                 AppUtil.shareDataUsingIntent(RssNewsUtil.getNewsBuilder().toString(),
                         getLink(), RssBaseDetailsActivity.this);
@@ -128,5 +145,15 @@ public class RssBaseDetailsActivity extends AppCompatActivity implements View.On
 
     public void setLink(String mLink) {
         this.mLink = mLink;
+    }
+
+    private void showExceptionMessage(String message) {
+        UIUtil.showDialogNotify(RssBaseDetailsActivity.this,
+                getString(R.string.text_dialog_title_error),
+                message,
+                null,
+                getString(R.string.text_dialog_btn_ok),
+                null,
+                UIUtil.getDefaultDismissListener());
     }
 }

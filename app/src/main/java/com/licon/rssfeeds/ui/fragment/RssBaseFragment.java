@@ -188,17 +188,20 @@ public class RssBaseFragment extends Fragment implements RssBaseAdapter.onItemCl
 
         @Override
         protected void onPostExecute(List<FeedItem> items) {
-            if(!items.isEmpty()) {
+            if(items != null && !items.isEmpty()) {
                 if(mContext != null) {
                     mFeedItemsAll = items;
                     loadDefaultData();
                     showContent();
                 }
             } else {
-                UIUtil.showErrorDialogNotify(getActivity(),
+                UIUtil.showDialogNotify(getActivity(),
                         getString(R.string.text_dialog_title_error),
                         getString(R.string.text_dialog_msg_no_data),
-                        getString(R.string.text_dialog_btn_ok));
+                        null,
+                        getString(R.string.text_dialog_btn_ok),
+                        null,
+                        UIUtil.getDefaultDismissListener());
             }
         }
     }
@@ -209,10 +212,13 @@ public class RssBaseFragment extends Fragment implements RssBaseAdapter.onItemCl
                 mFeedItemsPaginated.add(mFeedItemsAll.get(i));
             }
         } catch (IndexOutOfBoundsException e) {
-            UIUtil.showErrorDialogNotify(getActivity(),
-                    getString(R.string.text_dialog_title_sorry),
-                    getString(R.string.text_dialog_msg_no_more_data),
-                    getString(R.string.text_dialog_btn_ok));
+            UIUtil.showDialogNotify(getActivity(),
+                    getActivity().getString(R.string.text_dialog_title_sorry),
+                    getActivity().getString(R.string.text_dialog_msg_no_data),
+                    null,
+                    getActivity().getString(R.string.text_dialog_btn_ok),
+                    null,
+                    UIUtil.getDefaultDismissListener());
         }
     }
 
@@ -233,10 +239,13 @@ public class RssBaseFragment extends Fragment implements RssBaseAdapter.onItemCl
                         mRssBaseAdapter.notifyItemInserted(mFeedItemsPaginated.size());
                     }
                 } catch (IndexOutOfBoundsException e) {
-                    UIUtil.showErrorDialogNotify(getActivity(),
-                            getString(R.string.text_dialog_title_sorry),
-                            getString(R.string.text_dialog_msg_no_more_data),
-                            getString(R.string.text_dialog_btn_ok));
+                    UIUtil.showDialogNotify(getActivity(),
+                            getActivity().getString(R.string.text_dialog_title_sorry),
+                            getActivity().getString(R.string.text_dialog_msg_no_more_data),
+                            null,
+                            getActivity().getString(R.string.text_dialog_btn_ok),
+                            null,
+                            UIUtil.getDefaultDismissListener());
                 }
             }
         }, AppData.PAGINATION_TIME_OUT);

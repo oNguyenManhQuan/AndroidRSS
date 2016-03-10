@@ -45,8 +45,20 @@ public class UIUtil {
         }
     }
 
-    public static void showErrorDialogNotify(final Activity activity, final String title,
-                                             final String msg, final String strCancel) {
+    public static DialogInterface.OnClickListener getDefaultDismissListener() {
+        DialogInterface.OnClickListener onCancelClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        };
+        return onCancelClickListener;
+    }
+
+    public static void showDialogNotify(final Activity activity, final String title, final String msg,
+                                              final String strOk, final String strCancel,
+                                              DialogInterface.OnClickListener onOkClickListener,
+                                              DialogInterface.OnClickListener onCancelClickListener) {
         if (activity == null) {
             return;
         } else if (activity.isFinishing()) {
@@ -56,11 +68,10 @@ public class UIUtil {
         dialog.setTitle(title);
         dialog.setMessage(msg);
         if (!TextUtils.isEmpty(strCancel)) {
-            dialog.setNegativeButton(strCancel, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.dismiss();
-                }
-            });
+            dialog.setNegativeButton(strCancel, onCancelClickListener);
+        }
+        if (!TextUtils.isEmpty(strOk)) {
+            dialog.setPositiveButton(strOk, onOkClickListener);
         }
         dialog.show();
     }
@@ -90,15 +101,19 @@ public class UIUtil {
         }
 
         protected void onPostExecute(Bitmap image) {
-            if(image != null){
+            if(image != null) {
                 mImageView.setImageBitmap(image);
                 pDialog.dismiss();
             } else {
                 pDialog.dismiss();
-                showErrorDialogNotify(mActivity,
+
+                showDialogNotify(mActivity,
                         mActivity.getString(R.string.text_dialog_title_error),
                         mActivity.getString(R.string.text_error_image_load),
-                        mActivity.getString(R.string.text_dialog_btn_ok));
+                        null,
+                        mActivity.getString(R.string.text_dialog_btn_ok),
+                        null,
+                        getDefaultDismissListener());
             }
         }
     }
