@@ -1,5 +1,6 @@
 package com.licon.rssfeeds.ui.activity;
 
+import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -17,8 +18,11 @@ import android.view.View;
 
 import com.licon.rssfeeds.R;
 import com.licon.rssfeeds.data.constants.AppData;
+import com.licon.rssfeeds.data.constants.IntentData;
+import com.licon.rssfeeds.data.constants.RSSData;
 import com.licon.rssfeeds.ui.adapter.ViewPagerAdapter;
 import com.licon.rssfeeds.util.AppUtil;
+import com.licon.rssfeeds.util.UIUtil;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener, PopupMenu.OnMenuItemClickListener {
@@ -100,15 +104,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
+        Intent intent = new Intent(this, WebViewActivity.class);
         switch (menuItem.getItemId()) {
-            case R.id.nav_item_feedstab:
-
+            case R.id.nav_item_about:
+                UIUtil.showDialogNotify(this,
+                        getString(R.string.action_about),
+                        getString(R.string.text_about) + getString(R.string.copyright),
+                        null,
+                        getString(R.string.text_dialog_btn_ok),
+                        null,
+                        UIUtil.getDefaultDismissListener());
                 break;
-            case R.id.nav_item_settings:
-
+            case R.id.nav_item_voa_main:
+                intent.putExtra(IntentData.WEBVIEW_DATA, RSSData.LINK_MAIN);
+                startActivity(intent);
                 break;
-            case R.id.nav_item_help:
-
+            case R.id.nav_item_voa_blog:
+                intent.putExtra(IntentData.WEBVIEW_DATA, RSSData.LINK_BLOG);
+                startActivity(intent);
+                break;
+            case R.id.nav_item_voa_video:
+                intent.putExtra(IntentData.WEBVIEW_DATA, RSSData.LINK_VIDEO);
+                startActivity(intent);
+                break;
+            case R.id.nav_item_voa_contact:
+                intent.putExtra(IntentData.WEBVIEW_DATA, RSSData.LINK_CONTACT);
+                startActivity(intent);
                 break;
         }
         mDrawerLayout.closeDrawers();

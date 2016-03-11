@@ -140,8 +140,9 @@ public class UIUtil {
                 return bitmap;
             }
         } catch (Exception e) {
-            urlConnection.disconnect();
-
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();

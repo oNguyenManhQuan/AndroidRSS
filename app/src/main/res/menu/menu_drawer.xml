@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:id="@+id/nav_item_feedstab"
-      android:title="@string/drawer_item_feeds"
-      android:icon="@mipmap/ic_launcher"/>
-
-    <item android:title="@string/tab_others">
+    <item
+        android:id="@+id/nav_item_about"
+        android:icon="@mipmap/ic_launcher"
+        android:title="@string/action_about" />
+    <item android:title="@string/app_name">
         <menu>
-            <item android:id="@+id/nav_item_settings"
-              android:title="@string/action_settings"
-              android:icon="@mipmap/ic_launcher"/>
-            <item android:id="@+id/nav_item_help"
-              android:title="@string/action_help"
-              android:icon="@mipmap/ic_launcher"/>
+            <item
+                android:id="@+id/nav_item_voa_main"
+                android:icon="@drawable/ic_drawer_link"
+                android:title="@string/drawer_item_voa_main" />
+            <item
+                android:id="@+id/nav_item_voa_blog"
+                android:icon="@drawable/ic_drawer_link"
+                android:title="@string/drawer_item_voa_blog" />
+            <item
+                android:id="@+id/nav_item_voa_video"
+                android:icon="@drawable/ic_drawer_link"
+                android:title="@string/drawer_item_voa_video" />
+            <item
+                android:id="@+id/nav_item_voa_contact"
+                android:icon="@drawable/ic_drawer_link"
+                android:title="@string/drawer_item_voa_contact" />
         </menu>
     </item>
 </menu>

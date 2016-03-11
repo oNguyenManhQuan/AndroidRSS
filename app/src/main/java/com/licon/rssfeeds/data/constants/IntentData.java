@@ -5,6 +5,7 @@ package com.licon.rssfeeds.data.constants;
  */
 public class IntentData {
     public static final String DETAILS_DATA = "rss_details";
+    public static final String WEBVIEW_DATA = "webview_data";
     // Share intent constants
     public static final String SHARE_TYPE_PLAIN_TEXT = "text/plain";
     public static final String SHARE_TYPE_MESSAGE = "message/rfc822";
