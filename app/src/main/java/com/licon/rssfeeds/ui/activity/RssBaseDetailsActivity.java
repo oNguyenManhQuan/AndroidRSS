@@ -1,6 +1,7 @@
 package com.licon.rssfeeds.ui.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
@@ -93,12 +94,14 @@ public class RssBaseDetailsActivity extends AppCompatActivity implements View.On
         String published_on = String.format(getResources().getString(R.string.published_on),
                 DateFormatUtil.parseDateToString(feedItem.getPublicationDate()));
         String media_url = feedItem.getMediaURL();
+        Drawable errorDrawable = getApplicationContext().getResources()
+                .getDrawable(R.drawable.bg_banar_voa);
 
         UIUtil.addTextToTextView(mTextTitle, title);
         UIUtil.addTextToTextView(mTextDescription, description);
         UIUtil.addTextToTextView(mTextPublishedDate, published_on);
         UIUtil.addTextToTextView(mTextAuthor, author);
-        UIUtil.loadImageViewFromUrl(mImageThumbnail, media_url, this);
+        UIUtil.loadImageViewFromUrl(mImageThumbnail, media_url, errorDrawable);
 
         mCollapsingToolbarLayout.setTitle(!TextUtils.isEmpty(category) ? category : "");
         setLink(feedItem.getLink());

@@ -22,7 +22,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/banner_height"
                 android:scaleType="centerCrop"
-                android:src="@drawable/bg_banar_voa"
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.7" />
 

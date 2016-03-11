@@ -34,4 +34,6 @@ public class AppData {
     public static String APP_FOLDER_NAME = "VOA";
     public static String FILE_FORMAT_PDF = ".pdf";
     public static Rectangle PDF_PAGE_DEFAULT_SIZE = PageSize.A4;
+    // checking internet access
+    public static String HOST_URL = "www.voanews.com";
 }

@@ -36,7 +36,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bg_ripple_effect_white"
                         android:drawableTop="@drawable/ic_tab_others_africa"
-                        android:text="@string/rss_category_africa"
+                        android:text="@string/tab_others_africa"
                         style="@style/AppGridStyleButton"/>
 
                     <Button
@@ -46,7 +46,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bg_ripple_effect_gray"
                         android:drawableTop="@drawable/ic_tab_others_asia"
-                        android:text="@string/rss_category_asia"
+                        android:text="@string/tab_others_asia"
                         style="@style/AppGridStyleButton"/>
                 </TableRow>
 
@@ -63,7 +63,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bg_ripple_effect_gray"
                         android:drawableTop="@drawable/ic_tab_others_middle_east"
-                        android:text="@string/rss_category_middle_east"
+                        android:text="@string/tab_others_middle_east"
                         style="@style/AppGridStyleButton"/>
 
                     <Button
@@ -73,7 +73,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bg_ripple_effect_white"
                         android:drawableTop="@drawable/ic_tab_others_europe"
-                        android:text="@string/rss_category_europe"
+                        android:text="@string/tab_others_europe"
                         style="@style/AppGridStyleButton"/>
                 </TableRow>
             </TableLayout>

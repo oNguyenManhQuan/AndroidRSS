@@ -33,4 +33,14 @@ public class RSSData {
     public static final String ATTRIBUTE_FEEDITEM_PAYMENT = "payment";
     public static final String ATTRIBUTE_FEEDITEM_HREF = "href";
     public static final String ATTRIBUTE_FEEDITEM_ENCLOSURE = "enclosure";
+    // feed category
+    public static final String ATTRIBUTE_CAT_USA_HOME = "USA";
+    public static final String ATTRIBUTE_CAT_TECHNOLOGY = "Science & Technology";
+    public static final String ATTRIBUTE_CAT_BUSINESS = "Economy";
+    public static final String ATTRIBUTE_CAT_HEALTH = "Health";
+    public static final String ATTRIBUTE_CAT_ENTERTAINMENT = "Arts & Entertainment";
+    public static final String ATTRIBUTE_CAT_AFRICA = "Africa";
+    public static final String ATTRIBUTE_CAT_ASIA = "Asia";
+    public static final String ATTRIBUTE_CAT_MIDDLE_EAST = "Middle East";
+    public static final String ATTRIBUTE_CAT_EUROPE = "Europe";
 }

@@ -5,6 +5,7 @@ package com.licon.rssfeeds.ui.adapter;
  */
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -60,10 +61,14 @@ public class RssBaseAdapter extends RecyclerView.Adapter {
             String description = feed.getDescription();
             String published_on = String.format(mResources.getString(R.string.published_on),
                     DateFormatUtil.parseDateToString(feed.getPublicationDate()));
+            String media_url = feed.getMediaURL();
+            Drawable errorDrawable = mContext.getResources()
+                    .getDrawable(R.drawable.bg_no_image_available);
 
             UIUtil.addTextToTextView(mHolder.mTextTitle, title);
             UIUtil.addTextToTextView(mHolder.mTextDescription, description);
             UIUtil.addTextToTextView(mHolder.mTextPublishedDate, published_on);
+            UIUtil.loadImageViewFromUrl(mHolder.mImageThumbnail, media_url, errorDrawable);
 
             if (feed.isHistory()) {
                 UIUtil.addDrawableToView(mHolder.mCardView,
