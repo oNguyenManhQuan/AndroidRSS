@@ -36,4 +36,6 @@ public class AppData {
     public static Rectangle PDF_PAGE_DEFAULT_SIZE = PageSize.A4;
     // checking internet access
     public static String HOST_URL = "www.voanews.com";
+    // webview data
+    public static String JS_INTERFACE = "Android";
 }

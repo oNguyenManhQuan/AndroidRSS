@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -29,7 +30,8 @@ import java.io.FileNotFoundException;
 /**
  * Created by FRAMGIA\khairul.alam.licon on 2/3/16.
  */
-public class RssBaseDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+public class RssBaseDetailsActivity extends AppCompatActivity implements View.OnClickListener,
+        Toolbar.OnMenuItemClickListener {
 
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private Toolbar mToolbar;
@@ -76,6 +78,7 @@ public class RssBaseDetailsActivity extends AppCompatActivity implements View.On
         mActionbar = getSupportActionBar();
         mActionbar.setHomeAsUpIndicator(R.drawable.ic_back_arrow);
         mActionbar.setDisplayHomeAsUpEnabled(true);
+        mToolbar.setOnMenuItemClickListener(this);
     }
 
     private void getFeedViaIntent() {
@@ -109,10 +112,33 @@ public class RssBaseDetailsActivity extends AppCompatActivity implements View.On
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_rss_details, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 this.finish();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_link:
+                AppUtil.openBrowser(getApplicationContext(), getLink());
+                return true;
+            case R.id.menu_print:
+                actionPrint();
+                return true;
+            case R.id.menu_share:
+                AppUtil.shareDataUsingIntent(RssNewsUtil.getNewsBuilder().toString(),
+                        getLink(), RssBaseDetailsActivity.this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -126,14 +152,7 @@ public class RssBaseDetailsActivity extends AppCompatActivity implements View.On
                 AppUtil.openBrowser(getApplicationContext(), getLink());
                 break;
             case R.id.button_print:
-                    try {
-                        FileUtil.createPdfToPrint(RssBaseDetailsActivity.this,
-                                RssNewsUtil.getNewsBuilder().toString());
-                    } catch (DocumentException e) {
-                        showExceptionMessage(e.getMessage());
-                    } catch (FileNotFoundException e) {
-                        showExceptionMessage(e.getMessage());
-                    }
+                actionPrint();
                 break;
             case R.id.button_share:
                 AppUtil.shareDataUsingIntent(RssNewsUtil.getNewsBuilder().toString(),
@@ -158,5 +177,16 @@ public class RssBaseDetailsActivity extends AppCompatActivity implements View.On
                 getString(R.string.text_dialog_btn_ok),
                 null,
                 UIUtil.getDefaultDismissListener());
+    }
+
+    private void actionPrint() {
+        try {
+            FileUtil.createPdfToPrint(RssBaseDetailsActivity.this,
+                    RssNewsUtil.getNewsBuilder().toString());
+        } catch (DocumentException e) {
+            showExceptionMessage(e.getMessage());
+        } catch (FileNotFoundException e) {
+            showExceptionMessage(e.getMessage());
+        }
     }
 }

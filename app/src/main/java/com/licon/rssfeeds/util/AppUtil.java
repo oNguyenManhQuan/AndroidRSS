@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Parcelable;
 
@@ -17,6 +18,9 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 import android.os.Environment;
+import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 
 import com.licon.rssfeeds.data.constants.AppData;
 
@@ -117,5 +121,15 @@ public class AppUtil {
                     null,
                     UIUtil.getDefaultDismissListener());
         }
+    }
+
+    public static void getAppWebViewSettings(WebView mWebview, Activity activity) {
+        mWebview.getSettings().setLoadsImagesAutomatically(true);
+        mWebview.getSettings().setJavaScriptEnabled(true);
+        mWebview.setBackgroundColor(Color.TRANSPARENT);
+        mWebview.addJavascriptInterface(new WebAppInterface(activity), AppData.JS_INTERFACE);
+        mWebview.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        mWebview.getSettings().setSupportZoom(true);
+        mWebview.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
     }
 }

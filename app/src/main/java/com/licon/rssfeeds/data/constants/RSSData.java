@@ -43,4 +43,9 @@ public class RSSData {
     public static final String ATTRIBUTE_CAT_ASIA = "Asia";
     public static final String ATTRIBUTE_CAT_MIDDLE_EAST = "Middle East";
     public static final String ATTRIBUTE_CAT_EUROPE = "Europe";
+    // voa links
+    public static final String LINK_MAIN = "http://www.voanews.com";
+    public static final String LINK_BLOG = "http://blogs.voanews.com";
+    public static final String LINK_VIDEO = "http://www.voanews.com/media/video/latest.html";
+    public static final String LINK_CONTACT = "http://www.voanews.com/info/contact_us/1360.html";
 }
